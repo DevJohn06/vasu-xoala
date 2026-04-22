@@ -17,13 +17,13 @@ type Props = {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   const id = Number(params.id);
-  if (isNaN(id)) return { title: "User Profile | Xoala" };
+  if (isNaN(id)) return { title: "User Profile | Vasu" };
   const userArr = await db.select().from(users).where(eq(users.id, id)).limit(1);
   const user = userArr[0];
-  if (!user) return { title: "User Profile | Xoala" };
+  if (!user) return { title: "User Profile | Vasu" };
   
   return {
-    title: `${user.firstName} ${user.lastName} | Xoala Admin`,
+    title: `${user.firstName} ${user.lastName} | Vasu Admin`,
   }
 }
 

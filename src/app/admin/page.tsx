@@ -10,7 +10,7 @@ import { CopyPin } from "@/components/ui/CopyPin"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard | Xoala"
+  title: "Admin Dashboard | Vasu"
 }
 
 export default async function AdminPage(props: { searchParams: Promise<{ editUserId?: string, editAdminId?: string, provType?: string, q?: string, statusFilter?: string, editRateId?: string, rateQ?: string }> }) {

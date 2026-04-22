@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { RatesTable, type RateRowType } from "@/components/RatesTable";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { db } from "@/db";
@@ -29,13 +30,8 @@ export default async function Home() {
       {/* Header / Nav */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-emerald-500 flex items-center justify-center">
-              <span className="text-white font-bold text-xl">X</span>
-            </div>
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Xoala
-            </span>
+          <div className="flex items-center">
+            <Image src="/vasu-logo.png" alt="Vasu" width={120} height={36} priority />
           </div>
           <ThemeToggle />
         </div>
@@ -68,8 +64,8 @@ export default async function Home() {
       {/* Minimal Footer */}
       <footer className="relative z-10 border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 mt-auto">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 flex flex-col items-center text-center">
-          <div className="h-8 w-8 rounded-lg bg-gray-200 dark:bg-zinc-800 flex items-center justify-center mb-6 grayscale opacity-50">
-            <span className="text-gray-500 dark:text-zinc-500 font-bold text-xl">X</span>
+          <div className="mb-6 opacity-40 grayscale">
+            <Image src="/vasu-logo.png" alt="Vasu" width={80} height={24} />
           </div>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} Vasu Inc. All rights reserved.

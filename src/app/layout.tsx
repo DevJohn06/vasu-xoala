@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Xoala | Rates Gateway",
-  description: "Xoala Global Exchange Rates Gateway",
+  title: "Vasu | Rates Gateway",
+  description: "Vasu Global Exchange Rates Gateway",
 };
 
 export default function RootLayout({

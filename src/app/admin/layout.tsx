@@ -1,6 +1,7 @@
 import { auth, signOut } from "@/auth"
 import { redirect } from "next/navigation"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import Image from "next/image"
 
 export default async function AdminLayout({
   children,
@@ -30,7 +31,7 @@ export default async function AdminLayout({
         <div className="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center w-full relative">
           {/* Logo centered */}
           <div className="font-semibold text-lg tracking-tight absolute left-1/2 transform -translate-x-1/2">
-            Xoala Admin
+            <Image src="/vasu-logo.png" alt="Vasu" width={100} height={30} />
           </div>
           
           <div className="w-full flex justify-end items-center gap-4">
