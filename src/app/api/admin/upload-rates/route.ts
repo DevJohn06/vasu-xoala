@@ -33,7 +33,7 @@ const REQUIRED_FIELDS = ["country", "currency", "channelCode", "paymentMethod"]
 export async function POST(req: NextRequest) {
   // Auth guard
   const session = await auth()
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session || session.user.type !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 

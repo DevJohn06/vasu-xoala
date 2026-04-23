@@ -15,7 +15,7 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
   // --- Disabled account gate ---
   // Check the slug's user status before showing anything (PIN form or rates).
   // This runs for everyone except an already-authenticated admin visiting the page.
-  const isAdmin = session?.user?.role === 'ADMIN';
+  const isAdmin = session?.user?.type === 'ADMIN';
   if (!isAdmin) {
     const userRecord = await db
       .select({ status: users.status })

@@ -1,20 +1,20 @@
 import NextAuth, { type DefaultSession } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { db } from "@/db"
-import { users, admins, type UserRole } from "@/db/schema"
+import { users, admins, type UserType } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import bcrypt from "bcryptjs"
 
 declare module "next-auth" {
   interface Session {
     user: {
-      role: UserRole | 'ADMIN'
+      type: UserType | 'ADMIN'
       pageSlug: string | null
     } & DefaultSession["user"]
   }
 
   interface User {
-    role: UserRole | 'ADMIN'
+    type: UserType | 'ADMIN'
     pageSlug: string | null
   }
 }
@@ -46,7 +46,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return {
               id: `admin-${admin.id}`,
               name: admin.username,
-              role: 'ADMIN',
+              type: 'ADMIN',
               pageSlug: null,
             }
           }
@@ -75,7 +75,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return {
             id: `user-${user.id}`,
             name: `${user.firstName} ${user.lastName}`,
-            role: user.role as UserRole,
+            type: user.type as UserType,
             pageSlug: user.pageSlug,
           }
         } catch (error) {
@@ -88,7 +88,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.type = user.type
         token.pageSlug = user.pageSlug
       }
       return token
@@ -96,7 +96,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token) {
         session.user.id = token.sub as string
-        session.user.role = token.role as UserRole | 'ADMIN'
+        session.user.type = token.type as UserType | 'ADMIN'
         session.user.pageSlug = token.pageSlug as string | null
       }
       return session

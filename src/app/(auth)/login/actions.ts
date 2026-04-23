@@ -23,7 +23,7 @@ export async function login(formData: FormData) {
 
   const session = await auth()
 
-  if (session?.user?.role === 'ADMIN') {
+  if (session?.user?.type === 'ADMIN') {
     redirect("/admin")
   } else if (session?.user?.pageSlug) {
     redirect(`/rate/${session.user.pageSlug}`)

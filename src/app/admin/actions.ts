@@ -1,7 +1,7 @@
 "use server"
 
 import { db } from "@/db"
-import { users, admins, rates, type UserRole } from "@/db/schema"
+import { users, admins, rates, type UserType } from "@/db/schema"
 import { revalidatePath } from "next/cache"
 import bcrypt from "bcryptjs"
 import { auth } from "@/auth"
@@ -37,14 +37,14 @@ async function enforceAdminLimit() {
 
 export async function createUser(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const firstName = formData.get("firstName") as string
   const lastName = formData.get("lastName") as string
-  const role = (formData.get("role") as UserRole) || 'USER'
+  const type = (formData.get("type") as UserType) || 'USER'
   const pageSlug = formData.get("pageSlug") as string | null
 
-  if (!firstName || !lastName || !role) return
+  if (!firstName || !lastName || !type) return
 
   let finalSlug = pageSlug;
   if (!finalSlug || finalSlug.trim() === '') {
@@ -56,7 +56,7 @@ export async function createUser(formData: FormData) {
   await db.insert(users).values({
     firstName,
     lastName,
-    role,
+    type,
     pageSlug: finalSlug,
     pin,
     status: 'active'
@@ -67,18 +67,18 @@ export async function createUser(formData: FormData) {
 
 export async function updateUser(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return
 
   const firstName = formData.get("firstName") as string
   const lastName = formData.get("lastName") as string
-  const role = formData.get("role") as UserRole
+  const type = formData.get("type") as UserType
   const pageSlug = formData.get("pageSlug") as string | null
   const status = formData.get("status") as string
 
-  if (!firstName || !lastName || !role) return
+  if (!firstName || !lastName || !type) return
 
   let finalSlug = pageSlug;
   if (!finalSlug || finalSlug.trim() === '') {
@@ -88,7 +88,7 @@ export async function updateUser(formData: FormData) {
   await db.update(users).set({
     firstName,
     lastName,
-    role,
+    type,
     pageSlug: finalSlug,
     status: status === 'active' ? 'active' : 'disabled'
   }).where(eq(users.id, id))
@@ -98,7 +98,7 @@ export async function updateUser(formData: FormData) {
 
 export async function deleteUser(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return
@@ -109,7 +109,7 @@ export async function deleteUser(formData: FormData) {
 
 export async function toggleUserStatus(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return
@@ -130,7 +130,7 @@ export async function toggleUserStatus(formData: FormData) {
 
 export async function createAdmin(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const username = formData.get("username") as string
   const password = formData.get("password") as string
@@ -151,7 +151,7 @@ export async function createAdmin(formData: FormData) {
 
 export async function updateAdmin(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return
@@ -174,7 +174,7 @@ export async function updateAdmin(formData: FormData) {
 
 export async function deleteAdmin(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return
@@ -194,7 +194,7 @@ export async function deleteAdmin(formData: FormData) {
 
 export async function createRate(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const pageSlug = (formData.get("pageSlug") as string) || "general-rates"
   const country = formData.get("country") as string
@@ -225,7 +225,7 @@ export async function createRate(formData: FormData) {
 
 export async function deleteRate(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return
@@ -236,7 +236,7 @@ export async function deleteRate(formData: FormData) {
 
 export async function copyGeneralRatesToUser(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) throw new Error("ID not provided")
@@ -274,7 +274,7 @@ export async function copyGeneralRatesToUser(formData: FormData) {
 
 export async function updateRate(formData: FormData) {
   const session = await auth()
-  if (!session || session.user.role !== 'ADMIN') throw new Error("Unauthorized")
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   const id = Number(formData.get("id"))
   if (!id) return

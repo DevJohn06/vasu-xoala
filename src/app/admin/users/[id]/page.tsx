@@ -50,7 +50,7 @@ export default async function UserProfilePage(props: Props) {
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-zinc-50">
               {user.firstName} {user.lastName} 
               <span className="ml-3 text-lg font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 rounded-full">
-                {user.role}
+                {user.type}
               </span>
             </h1>
             <p className="text-gray-500 dark:text-gray-400 mt-1 font-mono text-sm flex items-center gap-1.5 flex-wrap">

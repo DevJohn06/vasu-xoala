@@ -15,9 +15,9 @@ export default async function RateIndexPage() {
     redirect("/")
   }
 
-  const { role, pageSlug } = session.user
+  const { type, pageSlug } = session.user
 
-  if (role !== "ADMIN" && pageSlug) {
+  if (type !== "ADMIN" && pageSlug) {
     redirect(`/rate/${pageSlug}`)
   }
 

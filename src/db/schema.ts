@@ -7,15 +7,15 @@ export const admins = sqliteTable('admin', {
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
 
-export const USER_ROLES = ['USER', 'MERCHANT', 'RESELLER', 'MOR', 'SPECIAL'] as const;
-export type UserRole = typeof USER_ROLES[number];
+export const USER_TYPES = ['USER', 'MERCHANT', 'RESELLER', 'MOR', 'SPECIAL'] as const;
+export type UserType = typeof USER_TYPES[number];
 
 export const users = sqliteTable('user', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   firstName: text('first_name').notNull(),
   lastName: text('last_name').notNull(),
   pin: text('pin').notNull().unique(),
-  role: text('role').notNull().default('USER'), // 'USER' | 'MERCHANT' | 'RESELLER' | 'MOR' | 'SPECIAL'
+  type: text('type').notNull().default('USER'), // 'USER' | 'MERCHANT' | 'RESELLER' | 'MOR' | 'SPECIAL'
   pageSlug: text('sanity_page_slug'),
   status: text('status').notNull().default('active'), // 'active' | 'disabled'
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),

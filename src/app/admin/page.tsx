@@ -1,5 +1,5 @@
 import { db } from "@/db"
-import { users, admins, USER_ROLES } from "@/db/schema"
+import { users, admins, USER_TYPES } from "@/db/schema"
 import { createUser, createAdmin, deleteUser, deleteAdmin, updateUser, updateAdmin, toggleUserStatus } from "./actions"
 import { desc } from "drizzle-orm"
 import Link from "next/link"
@@ -64,10 +64,10 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
               <input name="lastName" type="text" required className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow" />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Role</label>
-              <select name="role" className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow">
-                {USER_ROLES.filter(r => r !== 'USER').map(role => (
-                  <option key={role} value={role} className="dark:bg-zinc-900">{role}</option>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+              <select name="type" className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow">
+                {USER_TYPES.filter(r => r !== 'USER').map(type => (
+                  <option key={type} value={type} className="dark:bg-zinc-900">{type}</option>
                 ))}
               </select>
             </div>
@@ -118,7 +118,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                   <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300 w-16">PIN</th>
                   <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300">Identity</th>
                   <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300">Status</th>
-                  <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300">Role</th>
+                  <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300">Type</th>
                   <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300">Slug</th>
                   <th className="px-6 py-4 font-semibold text-right text-gray-600 dark:text-gray-300">Actions</th>
                 </tr>
@@ -146,8 +146,8 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                           </select>
                         </td>
                         <td className="px-6 py-4">
-                          <select form={formId} name="role" defaultValue={user.role} className="w-full px-2 py-1.5 bg-white dark:bg-zinc-950 border border-gray-300 dark:border-zinc-700 rounded focus:ring-2 focus:ring-blue-500 outline-none">
-                            {USER_ROLES.filter(r => r !== 'USER').map(r => <option key={r} value={r}>{r}</option>)}
+                          <select form={formId} name="type" defaultValue={user.type} className="w-full px-2 py-1.5 bg-white dark:bg-zinc-950 border border-gray-300 dark:border-zinc-700 rounded focus:ring-2 focus:ring-blue-500 outline-none">
+                            {USER_TYPES.filter(r => r !== 'USER').map(r => <option key={r} value={r}>{r}</option>)}
                           </select>
                         </td>
                         <td className="px-6 py-4">
@@ -175,7 +175,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                       </td>
                       <td className="px-6 py-4">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-zinc-800 dark:text-zinc-300 ring-1 ring-gray-500/10 dark:ring-zinc-700">
-                          {user.role}
+                          {user.type}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-gray-600 dark:text-gray-400 font-mono text-sm">{user.pageSlug || <span className="text-gray-300 dark:text-zinc-600">—</span>}</td>
