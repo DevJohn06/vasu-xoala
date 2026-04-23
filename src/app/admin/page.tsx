@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Admin Dashboard | Vasu"
 }
 
-export default async function AdminPage(props: { searchParams: Promise<{ editUserId?: string, editAdminId?: string, provType?: string, q?: string, statusFilter?: string, editRateId?: string, rateQ?: string }> }) {
+export default async function AdminPage(props: { searchParams: Promise<{ editUserId?: string, editAdminId?: string, provType?: string, q?: string, statusFilter?: string, editRateId?: string, rateQ?: string, rateTab?: string }> }) {
   const searchParams = await props.searchParams;
   const editUserId = searchParams?.editUserId;
   const editAdminId = searchParams?.editAdminId;
@@ -277,7 +277,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
         </div>
       </div>
 
-      <RatesPanel editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} />
+      <RatesPanel editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} rateTab={searchParams?.rateTab} />
     </div>
   )
 }

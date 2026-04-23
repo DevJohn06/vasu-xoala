@@ -6,6 +6,7 @@ import RatesForm from "./RatesForm"
 import EditRateModal from "./EditRateModal"
 import RateSearchInput from "./RateSearchInput"
 import UploadRatesModal from "./UploadRatesModal"
+import CloneDirectButton from "./CloneDirectButton"
 import { desc, eq } from "drizzle-orm"
 import { COUNTRIES } from "@/data/countries"
 
@@ -14,8 +15,8 @@ const getCountryFlag = (countryName: string) => {
   return match?.flag || "🏳️";
 };
 
-export default async function RatesPanel({ targetSlug, editRateId, rateQ }: { targetSlug?: string, editRateId?: string, rateQ?: string } = {}) {
-  const activeSlug = targetSlug || "general-rates";
+export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTab }: { targetSlug?: string, editRateId?: string, rateQ?: string, rateTab?: string } = {}) {
+  const activeSlug = targetSlug ? targetSlug : (rateTab === 'reseller' ? 'general-rates' : 'general-rates-direct');
   const query = db.select().from(rates).where(eq(rates.pageSlug, activeSlug)).orderBy(desc(rates.id));
   const allRates = await query;
   
@@ -39,11 +40,11 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ }: { ta
       <div className="flex justify-between items-center px-1 mb-6">
         <div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-1">
-            {!targetSlug ? "General Rates Configuration" : "Personalized Rate Profile"}
+            {!targetSlug ? (rateTab === 'reseller' ? "Reseller Rates Configuration" : "Direct Rates Configuration") : "Personalized Rate Profile"}
           </h3>
           <p className="text-gray-500 dark:text-gray-400 text-sm">
             {!targetSlug 
-              ? 'Configure the global default rate table rows acting as the master "general-rates" fallback.'
+              ? 'Configure the global default rate table rows acting as the master fallback.'
               : 'Add, edit, or override specific rate rows exclusively for this user instance.'}
           </p>
         </div>
@@ -54,15 +55,28 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ }: { ta
 
       <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm">
         <h4 className="text-md font-semibold text-gray-900 dark:text-zinc-50 mb-4">Add New Rate Row</h4>
-        <RatesForm defaultSlug={targetSlug} />
+        <RatesForm defaultSlug={activeSlug} />
       </div>
 
-      <div className="flex items-center justify-between px-1">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {displayedRates.length} row{displayedRates.length !== 1 ? "s" : ""}
-          {rateQ ? ` matching "${rateQ}"` : ` total`}
-        </p>
-        <RateSearchInput />
+      <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          {!targetSlug && (
+            <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-lg w-fit">
+              <Link scroll={false} href="?rateTab=direct" className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${rateTab !== 'reseller' ? 'bg-white dark:bg-zinc-700 shadow-sm text-gray-900 dark:text-gray-100' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}>Direct Rates</Link>
+              <Link scroll={false} href="?rateTab=reseller" className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${rateTab === 'reseller' ? 'bg-white dark:bg-zinc-700 shadow-sm text-gray-900 dark:text-gray-100' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}>Reseller Rates</Link>
+            </div>
+          )}
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {displayedRates.length} row{displayedRates.length !== 1 ? "s" : ""}
+            {rateQ ? ` matching "${rateQ}"` : ` total`}
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          {!targetSlug && rateTab === 'reseller' && (
+            <CloneDirectButton />
+          )}
+          <RateSearchInput />
+        </div>
       </div>
 
       <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">

@@ -248,8 +248,10 @@ export async function copyGeneralRatesToUser(formData: FormData) {
   // Delete existing
   await db.delete(rates).where(eq(rates.pageSlug, user.pageSlug))
 
+  const source = formData.get("source") as string || "general-rates"
+
   // Fetch general rates
-  const generalRates = await db.select().from(rates).where(eq(rates.pageSlug, "general-rates"))
+  const generalRates = await db.select().from(rates).where(eq(rates.pageSlug, source))
   if (generalRates.length > 0) {
     const newRates = generalRates.map(r => ({
       pageSlug: user.pageSlug!,
@@ -305,4 +307,35 @@ export async function updateRate(formData: FormData) {
   revalidatePath("/admin")
   const returnUrl = formData.get("returnUrl") as string
   if (returnUrl) redirect(returnUrl)
+}
+
+export async function cloneDirectToReseller() {
+  const session = await auth()
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
+
+  // Delete existing reseller rates
+  await db.delete(rates).where(eq(rates.pageSlug, "general-rates"))
+
+  // Fetch direct rates
+  const directRates = await db.select().from(rates).where(eq(rates.pageSlug, "general-rates-direct"))
+  if (directRates.length > 0) {
+    const newRates = directRates.map(r => ({
+      pageSlug: "general-rates",
+      country: r.country,
+      currency: r.currency,
+      channelCode: r.channelCode,
+      paymentMethod: r.paymentMethod,
+      verticals: r.verticals,
+      deposit: r.deposit,
+      depositLimit: r.depositLimit,
+      withdrawal: r.withdrawal,
+      withdrawalLimit: r.withdrawalLimit,
+      otherFeesNotes: r.otherFeesNotes,
+      settlementTerms: r.settlementTerms,
+      settlementCycle: r.settlementCycle,
+    }))
+    await db.insert(rates).values(newRates)
+  }
+
+  revalidatePath("/admin")
 }

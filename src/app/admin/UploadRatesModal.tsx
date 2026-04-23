@@ -43,7 +43,10 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
   const [inserted, setInserted] = useState(0)
   const [skipped, setSkipped] = useState<SkippedRow[]>([])
   const [errorMsg, setErrorMsg] = useState("")
+  const [uploadTarget, setUploadTarget] = useState(targetSlug)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const isGeneralRates = targetSlug === 'general-rates' || targetSlug === 'general-rates-direct';
 
   const reset = () => {
     setSelectedFile(null)
@@ -53,6 +56,7 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
     setInserted(0)
     setSkipped([])
     setErrorMsg("")
+    setUploadTarget(targetSlug)
     // keep replaceMode so user doesn't have to re-toggle after closing
   }
 
@@ -114,7 +118,7 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
 
     const fd = new FormData()
     fd.append("file", selectedFile)
-    fd.append("pageSlug", targetSlug)
+    fd.append("pageSlug", uploadTarget)
     fd.append("mode", replaceMode ? "replace" : "append")
 
     try {
@@ -176,7 +180,7 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
               <div>
                 <h2 className="text-base font-semibold text-gray-900 dark:text-zinc-50">Upload Rate Rows</h2>
                 <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">
-                  Target: <span className="font-mono text-emerald-600 dark:text-emerald-400">{targetSlug}</span>
+                  Target: <span className="font-mono text-emerald-600 dark:text-emerald-400">{uploadTarget}</span>
                 </p>
               </div>
               <button onClick={closeModal} className="p-2 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
@@ -187,6 +191,24 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
             </div>
 
             <div className="p-6 space-y-5">
+              
+              {/* Target Table Selector */}
+              {isGeneralRates && (
+                <div className="flex items-center justify-between p-3.5 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
+                  <div>
+                    <p className="text-sm font-medium text-gray-800 dark:text-gray-100">Target Table</p>
+                    <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Select which general rate table to upload to</p>
+                  </div>
+                  <select 
+                    value={uploadTarget} 
+                    onChange={(e) => setUploadTarget(e.target.value)}
+                    className="px-3 py-2 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-700 rounded-lg text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500"
+                  >
+                    <option value="general-rates">Reseller Rates</option>
+                    <option value="general-rates-direct">Direct Rates</option>
+                  </select>
+                </div>
+              )}
 
               {/* Replace Mode Toggle */}
               <div className="flex items-center justify-between p-3.5 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700">
@@ -220,7 +242,7 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
                     <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
                   </svg>
                   <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                    <strong>Replace mode:</strong> Uploading will <strong>delete all existing rate rows</strong> for <span className="font-mono">{targetSlug}</span> and replace them with the rows in this file. This cannot be undone.
+                    <strong>Replace mode:</strong> Uploading will <strong>delete all existing rate rows</strong> for <span className="font-mono">{uploadTarget}</span> and replace them with the rows in this file. This cannot be undone.
                   </p>
                 </div>
               )}
