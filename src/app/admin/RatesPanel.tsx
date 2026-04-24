@@ -81,19 +81,19 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
 
       <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs whitespace-nowrap">
-            <thead className="bg-gray-50/50 dark:bg-zinc-800/50 border-b border-gray-100 dark:border-zinc-800">
+          <table className="w-full text-left text-[11px] whitespace-nowrap">
+            <thead className="bg-gray-50/50 dark:bg-zinc-800/50 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider border-b border-gray-100 dark:border-zinc-800">
               <tr>
-                <th className="px-4 py-3 font-semibold text-left text-gray-600 dark:text-gray-300">Actions</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300">Country/Cur</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300">Channel Code</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300">Method</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300">Verticals</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 whitespace-nowrap">Deposit Rate</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 whitespace-nowrap">Dep. Limit</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 whitespace-nowrap">W/D Rate</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 whitespace-nowrap">W/D Limit</th>
-                <th className="px-4 py-3 font-semibold text-gray-600 dark:text-gray-300">Settlement</th>
+                <th className="px-4 py-3 text-left">Actions</th>
+                <th className="px-4 py-3 text-left">Country/Cur</th>
+                <th className="px-4 py-3 text-left">Channel Code</th>
+                <th className="px-4 py-3 text-left">Method</th>
+                <th className="px-4 py-3 text-left">Verticals</th>
+                <th className="px-4 py-3 text-left whitespace-nowrap">Deposit Rate</th>
+                <th className="px-4 py-3 text-left whitespace-nowrap">Dep. Limit</th>
+                <th className="px-4 py-3 text-left whitespace-nowrap">W/D Rate</th>
+                <th className="px-4 py-3 text-left whitespace-nowrap">W/D Limit</th>
+                <th className="px-4 py-3 text-left">Settlement</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
@@ -116,10 +116,10 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
                       </div>
                     </td>
                     <td className="px-4 py-3 text-gray-900 dark:text-gray-100" title={rate.country}>
-                      <span className="text-base mr-1.5 drop-shadow-sm">{getCountryFlag(rate.country || "")}</span>
+                      <span className="text-2xl mr-1.5 drop-shadow-sm leading-none align-middle">{getCountryFlag(rate.country || "")}</span>
                       <span className="font-semibold text-emerald-600 dark:text-emerald-400">{rate.currency}</span>
                     </td>
-                    <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[11px]">{rate.channelCode || '-'}</td>
+                    <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[10px]">{rate.channelCode || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.paymentMethod}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[120px] truncate" title={rate.verticals || ''}>{rate.verticals || '-'}</td>
                     <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium max-w-[200px] whitespace-normal leading-relaxed">{rate.deposit || '-'}</td>

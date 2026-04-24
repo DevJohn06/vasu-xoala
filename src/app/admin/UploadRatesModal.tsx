@@ -305,10 +305,10 @@ export default function UploadRatesModal({ targetSlug }: { targetSlug: string })
                   <div className="rounded-lg border border-gray-200 dark:border-zinc-700 overflow-hidden">
                     <div className="overflow-x-auto max-h-48">
                       <table className="w-full text-[11px]">
-                        <thead className="bg-gray-50 dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700">
+                        <thead className="bg-gray-50 dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider">
                           <tr>
                             {previewHeaders.map((h) => (
-                              <th key={h} className="px-3 py-2 text-left font-semibold text-gray-500 dark:text-gray-400 whitespace-nowrap">{h}</th>
+                              <th key={h} className="px-3 py-2 text-left whitespace-nowrap">{h}</th>
                             ))}
                             {Object.keys(preview[0]).length > 7 && <th className="px-3 py-2 text-gray-400">…</th>}
                           </tr>
