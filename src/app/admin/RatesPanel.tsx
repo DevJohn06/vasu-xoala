@@ -15,6 +15,16 @@ const getCountryFlag = (countryName: string) => {
   return match?.flag || "🏳️";
 };
 
+const formatText = (text?: string | null) => {
+  if (!text) return null;
+  return text.split('\n').map((line, i) => (
+    <span key={i}>
+      {line}
+      {i !== text.split('\n').length - 1 && <br />}
+    </span>
+  ));
+};
+
 export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTab }: { targetSlug?: string, editRateId?: string, rateQ?: string, rateTab?: string } = {}) {
   const activeSlug = targetSlug ? targetSlug : (rateTab === 'reseller' ? 'general-rates' : 'general-rates-direct');
   const query = db.select().from(rates).where(eq(rates.pageSlug, activeSlug)).orderBy(desc(rates.id));
@@ -89,9 +99,9 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
                 <th className="px-4 py-3 text-left">Channel Code</th>
                 <th className="px-4 py-3 text-left">Method</th>
                 <th className="px-4 py-3 text-left">Verticals</th>
-                <th className="px-4 py-3 text-left whitespace-nowrap">Deposit Rate</th>
+                <th className="px-4 py-3 text-left whitespace-nowrap">Deposit</th>
                 <th className="px-4 py-3 text-left whitespace-nowrap">Dep. Limit</th>
-                <th className="px-4 py-3 text-left whitespace-nowrap">W/D Rate</th>
+                <th className="px-4 py-3 text-left whitespace-nowrap">Withdrawal</th>
                 <th className="px-4 py-3 text-left whitespace-nowrap">W/D Limit</th>
                 <th className="px-4 py-3 text-left">Settlement</th>
               </tr>
@@ -122,9 +132,9 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
                     <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[10px]">{rate.channelCode || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.paymentMethod}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[120px] truncate" title={rate.verticals || ''}>{rate.verticals || '-'}</td>
-                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium max-w-[200px] whitespace-normal leading-relaxed">{rate.deposit || '-'}</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] whitespace-normal leading-relaxed">{rate.depositLimit || '-'}</td>
-                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium max-w-[200px] whitespace-normal leading-relaxed">{rate.withdrawal || '-'}</td>
+                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">{formatText(rate.deposit) || '-'}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] whitespace-normal align-top leading-relaxed">{rate.depositLimit || '-'}</td>
+                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">{formatText(rate.withdrawal) || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] whitespace-normal leading-relaxed">{rate.withdrawalLimit || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.settlementTerms || '-'} <br/><span className="text-[10px] text-gray-400">{rate.settlementCycle || '-'}</span></td>
                   </tr>

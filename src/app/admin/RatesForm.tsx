@@ -47,16 +47,16 @@ export default function RatesForm({ defaultSlug }: { defaultSlug?: string } = {}
         <input name="verticals" type="text" placeholder="Gaming, Forex..." className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none" />
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Deposit Rate</label>
-        <input name="deposit" type="text" placeholder="e.g. 5.0%" className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none" />
+        <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Deposit</label>
+        <textarea name="deposit" placeholder="e.g. 5.0%" rows={3} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none resize-y" />
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Deposit Limit</label>
         <input name="depositLimit" type="text" placeholder="e.g. 10 - 10,000" className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none" />
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Withdrawal Rate</label>
-        <input name="withdrawal" type="text" placeholder="e.g. 2.0%" className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none" />
+        <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Withdrawal</label>
+        <textarea name="withdrawal" placeholder="e.g. 2.0%" rows={3} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none resize-y" />
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">W/D Limit</label>

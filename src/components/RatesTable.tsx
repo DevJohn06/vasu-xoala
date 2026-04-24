@@ -162,13 +162,13 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 leading-relaxed align-top min-w-[100px]">
                       {rate.verticals || <span className="text-gray-300 dark:text-zinc-600">-</span>}
                     </td>
-                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-medium whitespace-nowrap align-top">
+                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-medium whitespace-normal align-top min-w-[150px] max-w-[220px]">
                       {formatText(rate.deposit)}
                     </td>
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 align-top whitespace-nowrap">
                       {rate.depositLimit}
                     </td>
-                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-medium whitespace-nowrap align-top">
+                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-medium whitespace-normal align-top min-w-[150px] max-w-[220px]">
                       {formatText(rate.withdrawal)}
                     </td>
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 align-top whitespace-nowrap">

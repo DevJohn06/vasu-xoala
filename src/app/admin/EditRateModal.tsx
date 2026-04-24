@@ -92,16 +92,16 @@ export default function EditRateModal({ rate }: { rate: any }) {
               <input name="verticals" type="text" defaultValue={rate.verticals || ''} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500" />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Deposit Rate</label>
-              <input name="deposit" type="text" defaultValue={rate.deposit || ''} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500" />
+              <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Deposit</label>
+              <textarea name="deposit" defaultValue={rate.deposit || ''} rows={3} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500 resize-y" />
             </div>
             <div className="space-y-1">
               <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Deposit Limit</label>
               <input name="depositLimit" type="text" defaultValue={rate.depositLimit || ''} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500" />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Withdrawal Rate</label>
-              <input name="withdrawal" type="text" defaultValue={rate.withdrawal || ''} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500" />
+              <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Withdrawal</label>
+              <textarea name="withdrawal" defaultValue={rate.withdrawal || ''} rows={3} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500 resize-y" />
             </div>
             <div className="space-y-1">
               <label className="text-xs font-medium text-gray-600 dark:text-gray-400">W/D Limit</label>
