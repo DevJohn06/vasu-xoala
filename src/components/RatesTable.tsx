@@ -54,16 +54,15 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
 
   if (!rates || rates.length === 0) {
     return (
-      <section className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-16 md:py-24 text-center text-gray-500 dark:text-zinc-400">
+      <section className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-12 text-center text-gray-500 dark:text-zinc-400">
         No rates available.
       </section>
     );
   }
 
   return (
-    <section className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-16 md:py-24">
+    <section className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 pt-2 pb-16">
       <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <div className="border-b border-gray-200 dark:border-zinc-800 pb-4" />
 
         {/* Search bar above table */}
         <div className="flex items-center justify-between">

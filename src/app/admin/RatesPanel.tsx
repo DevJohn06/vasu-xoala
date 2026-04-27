@@ -9,6 +9,7 @@ import UploadRatesModal from "./UploadRatesModal"
 import EditFeesModal from "./EditFeesModal"
 import CloneDirectButton from "./CloneDirectButton"
 import { FeesTables } from "@/components/FeesTables"
+import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
 import { desc, eq } from "drizzle-orm"
 import { COUNTRIES } from "@/data/countries"
 
@@ -68,12 +69,13 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm">
-        <h4 className="text-md font-semibold text-gray-900 dark:text-zinc-50 mb-4">Add New Rate Row</h4>
-        <RatesForm defaultSlug={activeSlug} />
-      </div>
+      <PricingTabsWrapper>
+        <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm mb-6">
+          <h4 className="text-md font-semibold text-gray-900 dark:text-zinc-50 mb-4">Add New Rate Row</h4>
+          <RatesForm defaultSlug={activeSlug} />
+        </div>
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {!targetSlug && (
             <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-lg w-fit">
@@ -163,8 +165,9 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
           </div>
           <EditFeesModal targetSlug={activeSlug} initialData={initialFeesData} />
         </div>
-        <FeesTables data={initialFeesData} />
-      </div>
+          <FeesTables data={initialFeesData} />
+        </div>
+      </PricingTabsWrapper>
     </div>
   )
 }

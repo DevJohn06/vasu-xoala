@@ -6,6 +6,7 @@ import { rates, pageSettings } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { MOCK_RATES } from "@/data/mock-rates";
 import { FeesTables } from "@/components/FeesTables";
+import { PricingTabsWrapper } from "@/components/PricingTabsWrapper";
 
 export default async function Home() {
   let dbRates: RateRowType[] = [];
@@ -65,11 +66,13 @@ export default async function Home() {
           </p>
         </section>
 
-        {/* Rates Component */}
-        <RatesTable rates={displayRates} />
+        <PricingTabsWrapper>
+          {/* Rates Component */}
+          <RatesTable rates={displayRates} />
 
-        {/* Global Fees Configuration */}
-        <FeesTables data={feesSettingsData} />
+          {/* Global Fees Configuration */}
+          <FeesTables data={feesSettingsData} />
+        </PricingTabsWrapper>
 
       </main>
 
