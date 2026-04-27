@@ -1,7 +1,7 @@
 "use server"
 
 import { db } from "@/db"
-import { users, admins, rates, type UserType } from "@/db/schema"
+import { users, admins, rates, pageSettings, type UserType } from "@/db/schema"
 import { revalidatePath } from "next/cache"
 import bcrypt from "bcryptjs"
 import { auth } from "@/auth"
@@ -247,6 +247,7 @@ export async function copyGeneralRatesToUser(formData: FormData) {
 
   // Delete existing
   await db.delete(rates).where(eq(rates.pageSlug, user.pageSlug))
+  await db.delete(pageSettings).where(eq(pageSettings.pageSlug, user.pageSlug))
 
   const source = formData.get("source") as string || "general-rates"
 
@@ -269,6 +270,17 @@ export async function copyGeneralRatesToUser(formData: FormData) {
       settlementCycle: r.settlementCycle,
     }))
     await db.insert(rates).values(newRates)
+  }
+
+  // Fetch and copy general pageSettings
+  const generalSettings = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, source)).limit(1)
+  if (generalSettings.length > 0) {
+    const s = generalSettings[0]
+    await db.insert(pageSettings).values({
+      pageSlug: user.pageSlug,
+      tpsFees: s.tpsFees,
+      typFees: s.typFees,
+    })
   }
 
   revalidatePath(`/admin/users/${id}`)
@@ -315,6 +327,7 @@ export async function cloneDirectToReseller() {
 
   // Delete existing reseller rates
   await db.delete(rates).where(eq(rates.pageSlug, "general-rates"))
+  await db.delete(pageSettings).where(eq(pageSettings.pageSlug, "general-rates"))
 
   // Fetch direct rates
   const directRates = await db.select().from(rates).where(eq(rates.pageSlug, "general-rates-direct"))
@@ -336,6 +349,59 @@ export async function cloneDirectToReseller() {
     }))
     await db.insert(rates).values(newRates)
   }
+
+  // Fetch and copy direct pageSettings
+  const directSettings = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, "general-rates-direct")).limit(1)
+  if (directSettings.length > 0) {
+    const s = directSettings[0]
+    await db.insert(pageSettings).values({
+      pageSlug: "general-rates",
+      tpsFees: s.tpsFees,
+      typFees: s.typFees,
+    })
+  }
+
+  revalidatePath("/admin")
+}
+
+export async function updateFeesSettings(formData: FormData) {
+  const session = await auth()
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
+
+  const pageSlug = formData.get("pageSlug") as string
+  if (!pageSlug) return
+
+  const rawTypFxRates = formData.get("typFxRates") as string
+  let fxRates = []
+  try {
+    if (rawTypFxRates) fxRates = JSON.parse(rawTypFxRates)
+  } catch (e) {}
+
+  const tpsFees = {
+    minimumTransactionFee: formData.get("tpsMinimumTransactionFee") as string || "",
+    additionalLegalTerms: formData.get("tpsAdditionalLegalTerms") as string || "",
+  }
+
+  const typFees = {
+    clientsCurrencies: formData.get("typClientsCurrencies") as string || "",
+    mccCode: formData.get("typMccCode") as string || "",
+    traffic: formData.get("typTraffic") as string || "",
+    processingFees: formData.get("typProcessingFees") as string || "",
+    fxCalculationText: formData.get("typFxCalculationText") as string || "",
+    fxRates,
+  }
+
+  await db.insert(pageSettings).values({
+    pageSlug,
+    tpsFees,
+    typFees,
+  }).onConflictDoUpdate({
+    target: pageSettings.pageSlug,
+    set: {
+      tpsFees,
+      typFees,
+    }
+  })
 
   revalidatePath("/admin")
 }

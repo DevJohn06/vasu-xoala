@@ -1,12 +1,14 @@
 import { db } from "@/db"
-import { rates } from "@/db/schema"
+import { rates, pageSettings } from "@/db/schema"
 import { createRate, deleteRate, updateRate } from "./actions"
 import Link from "next/link"
 import RatesForm from "./RatesForm"
 import EditRateModal from "./EditRateModal"
 import RateSearchInput from "./RateSearchInput"
 import UploadRatesModal from "./UploadRatesModal"
+import EditFeesModal from "./EditFeesModal"
 import CloneDirectButton from "./CloneDirectButton"
+import { FeesTables } from "@/components/FeesTables"
 import { desc, eq } from "drizzle-orm"
 import { COUNTRIES } from "@/data/countries"
 
@@ -43,6 +45,9 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
   }
 
   const editingRate = editRateId ? allRates.find(r => r.id.toString() === editRateId) : null;
+
+  const feesSettings = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, activeSlug)).limit(1);
+  const initialFeesData = feesSettings.length > 0 ? feesSettings[0] : null;
 
   return (
     <div className={`space-y-6 ${!targetSlug ? "pt-8 border-t border-gray-200 dark:border-zinc-800" : ""}`}>
@@ -142,6 +147,23 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="mt-8 border-t border-gray-200 dark:border-zinc-800 pt-8">
+        <div className="flex justify-between items-start mb-6 px-1">
+          <div>
+            <h4 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-2">
+              {!targetSlug ? "Global Fee Configuration Tables" : "User Fee Configuration Tables"}
+            </h4>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">
+              {!targetSlug 
+                ? "These global fee tables serve as the default structure. Editing these will not affect users who already have their own independent configurations."
+                : "These fee tables are specific to this user instance. They are independent of the global configuration."}
+            </p>
+          </div>
+          <EditFeesModal targetSlug={activeSlug} initialData={initialFeesData} />
+        </div>
+        <FeesTables data={initialFeesData} />
       </div>
     </div>
   )

@@ -38,3 +38,19 @@ export const rates = sqliteTable('rate', {
   settlementCycle: text('settlement_cycle'),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
 });
+
+export const pageSettings = sqliteTable('page_settings', {
+  pageSlug: text('page_slug').primaryKey(),
+  tpsFees: text('tps_fees', { mode: 'json' }).$type<{
+    minimumTransactionFee: string;
+    additionalLegalTerms: string;
+  }>(),
+  typFees: text('typ_fees', { mode: 'json' }).$type<{
+    clientsCurrencies: string;
+    mccCode: string;
+    traffic: string;
+    processingFees: string;
+    fxCalculationText: string;
+    fxRates: Array<{ currencies: string; rate: string }>;
+  }>(),
+});

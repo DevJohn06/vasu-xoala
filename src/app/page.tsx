@@ -2,9 +2,10 @@ import Image from "next/image";
 import { RatesTable, type RateRowType } from "@/components/RatesTable";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { db } from "@/db";
-import { rates } from "@/db/schema";
+import { rates, pageSettings } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { MOCK_RATES } from "@/data/mock-rates";
+import { FeesTables } from "@/components/FeesTables";
 
 export default async function Home() {
   let dbRates: RateRowType[] = [];
@@ -17,6 +18,14 @@ export default async function Home() {
 
   // Fallback to MOCK_RATES to maintain preview if DB is empty or missing table.
   const displayRates: RateRowType[] = (dbRates && dbRates.length > 0) ? dbRates : MOCK_RATES;
+
+  let feesSettingsData = null;
+  try {
+    const feesSettingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, "global")).limit(1);
+    feesSettingsData = feesSettingsArr.length > 0 ? feesSettingsArr[0] : null;
+  } catch (err) {
+    console.error("Failed to fetch fees settings:", err);
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] font-sans selection:bg-emerald-500/30">
@@ -58,6 +67,9 @@ export default async function Home() {
 
         {/* Rates Component */}
         <RatesTable rates={displayRates} />
+
+        {/* Global Fees Configuration */}
+        <FeesTables data={feesSettingsData} />
 
       </main>
 

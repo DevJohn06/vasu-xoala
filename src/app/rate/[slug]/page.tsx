@@ -1,9 +1,10 @@
 import { auth } from "@/auth"
 import { loginWithPin } from "../actions"
 import { db } from "@/db"
-import { rates, users } from "@/db/schema"
+import { rates, users, pageSettings } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { RatesTable, type RateRowType } from "@/components/RatesTable"
+import { FeesTables } from "@/components/FeesTables"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import Image from "next/image"
 
@@ -104,6 +105,9 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
 
   // Native DB fetch replacing Sanity
   const dbRates: RateRowType[] = await db.select().from(rates).where(eq(rates.pageSlug, params.slug));
+  
+  const feesSettingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, params.slug)).limit(1);
+  const feesSettingsData = feesSettingsArr.length > 0 ? feesSettingsArr[0] : null;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-[#0a0a0a] font-sans selection:bg-emerald-500/30">
@@ -155,6 +159,8 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
         ) : (
           <RatesTable rates={dbRates} />
         )}
+
+        <FeesTables data={feesSettingsData} />
 
       </main>
 
