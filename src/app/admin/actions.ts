@@ -405,3 +405,37 @@ export async function updateFeesSettings(formData: FormData) {
 
   revalidatePath("/admin")
 }
+
+export async function purgeRates(formData: FormData) {
+  const session = await auth()
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
+
+  const pageSlug = formData.get("pageSlug") as string
+  const password = formData.get("password") as string
+
+  if (!pageSlug || !password) throw new Error("Missing slug or password")
+
+  const adminIdStr = session.user.id.replace('admin-', '')
+  const adminId = Number(adminIdStr)
+  if (!adminId) throw new Error("Invalid admin ID")
+
+  const adminRecordArr = await db.select().from(admins).where(eq(admins.id, adminId)).limit(1)
+  const adminRecord = adminRecordArr[0]
+  if (!adminRecord) throw new Error("Admin not found")
+
+  const isValid = await bcrypt.compare(password, adminRecord.password)
+  if (!isValid) throw new Error("Incorrect password")
+
+  await db.delete(rates).where(eq(rates.pageSlug, pageSlug))
+  
+  // Note: we could also delete pageSettings, but typically a "purge rates" implies just the rates table. 
+  // Let's delete pageSettings too to fully clear the configuration, or leave them? 
+  // The user says "purge button for the direct rates and admin reseller rates". Usually just deleting rates is enough.
+  // Actually, clone direct to reseller deletes both:
+  // await db.delete(rates).where(eq(rates.pageSlug, "general-rates"))
+  // await db.delete(pageSettings).where(eq(pageSettings.pageSlug, "general-rates"))
+  // I will just delete rates to be safe, since fee settings might still be desired. Let's stick to rates unless asked otherwise.
+
+  revalidatePath("/admin")
+}
+

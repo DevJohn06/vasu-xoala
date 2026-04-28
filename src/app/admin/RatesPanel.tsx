@@ -10,6 +10,7 @@ import EditFeesModal from "./EditFeesModal"
 import CloneDirectButton from "./CloneDirectButton"
 import { FeesTables } from "@/components/FeesTables"
 import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
+import PurgeRatesButton from "./PurgeRatesButton"
 import { desc, eq } from "drizzle-orm"
 import { COUNTRIES } from "@/data/countries"
 
@@ -149,6 +150,11 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
             </tbody>
           </table>
         </div>
+        {!targetSlug && displayedRates.length > 0 && (
+          <div className="p-4 border-t border-gray-100 dark:border-zinc-800 flex justify-end bg-gray-50/30 dark:bg-zinc-800/30">
+            <PurgeRatesButton targetSlug={activeSlug} />
+          </div>
+        )}
       </div>
 
       <div className="mt-8 border-t border-gray-200 dark:border-zinc-800 pt-8">
