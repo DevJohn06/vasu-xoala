@@ -1,10 +1,12 @@
 import { db } from "@/db"
-import { users } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { users, offshoreRates } from "@/db/schema"
+import { eq, desc } from "drizzle-orm"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import RatesPanel from "../../RatesPanel"
+import OffshoreRatesPanel from "../../OffshoreRatesPanel"
 import CloneRatesButton from "./CloneRatesButton"
+import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
 import { CopyPin } from "@/components/ui/CopyPin"
 
 import { Metadata } from "next"
@@ -36,6 +38,8 @@ export default async function UserProfilePage(props: Props) {
   const userArr = await db.select().from(users).where(eq(users.id, id)).limit(1);
   const user = userArr[0];
   if (!user) return notFound();
+
+  const userOffshoreRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, user.pageSlug || "")).orderBy(desc(offshoreRates.id));
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
@@ -78,8 +82,11 @@ export default async function UserProfilePage(props: Props) {
       </div>
 
       <div className="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm relative overflow-hidden">
-         {/* Reusing RatesPanel but passing targetSlug to filter to only show and append this specific user's rates */}
-         <RatesPanel targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} />
+         <PricingTabsWrapper
+           offshoreContent={<OffshoreRatesPanel initialRates={userOffshoreRates} targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} />}
+         >
+           <RatesPanel targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} />
+         </PricingTabsWrapper>
       </div>
     </div>
   );

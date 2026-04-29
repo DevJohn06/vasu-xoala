@@ -2,14 +2,13 @@ import { db } from "@/db"
 import { rates, pageSettings } from "@/db/schema"
 import { createRate, deleteRate, updateRate } from "./actions"
 import Link from "next/link"
-import RatesForm from "./RatesForm"
+import AddRateModal from "./AddRateModal"
 import EditRateModal from "./EditRateModal"
 import RateSearchInput from "./RateSearchInput"
 import UploadRatesModal from "./UploadRatesModal"
 import EditFeesModal from "./EditFeesModal"
 import CloneDirectButton from "./CloneDirectButton"
 import { FeesTables } from "@/components/FeesTables"
-import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
 import PurgeRatesButton from "./PurgeRatesButton"
 import { desc, eq } from "drizzle-orm"
 import { COUNTRIES } from "@/data/countries"
@@ -70,13 +69,7 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
         </div>
       </div>
 
-      <PricingTabsWrapper>
-        <div className="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm mb-6">
-          <h4 className="text-md font-semibold text-gray-900 dark:text-zinc-50 mb-4">Add New Rate Row</h4>
-          <RatesForm defaultSlug={activeSlug} />
-        </div>
-
-        <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4 mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {!targetSlug && (
             <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-lg w-fit">
@@ -89,7 +82,8 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
             {rateQ ? ` matching "${rateQ}"` : ` total`}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <AddRateModal targetSlug={activeSlug} />
           {!targetSlug && rateTab === 'reseller' && (
             <CloneDirectButton />
           )}
@@ -173,7 +167,6 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
         </div>
           <FeesTables data={initialFeesData} />
         </div>
-      </PricingTabsWrapper>
     </div>
   )
 }

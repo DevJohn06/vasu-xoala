@@ -4,12 +4,18 @@ import React, { useState } from "react";
 
 const TABS = [
   { id: "apms", label: "APMs", isLocked: false },
-  { id: "offshore", label: "Offshore Credit Card", isLocked: true },
+  { id: "offshore", label: "Offshore Credit Card", isLocked: false },
   { id: "crypto", label: "Crypto Solution", isLocked: true },
   { id: "otc", label: "OTC Desk", isLocked: true },
 ];
 
-export function PricingTabsWrapper({ children }: { children: React.ReactNode }) {
+export function PricingTabsWrapper({ 
+  children,
+  offshoreContent
+}: { 
+  children?: React.ReactNode;
+  offshoreContent?: React.ReactNode;
+}) {
   const [activeTab, setActiveTab] = useState("apms");
 
   return (
@@ -51,6 +57,10 @@ export function PricingTabsWrapper({ children }: { children: React.ReactNode }) 
         {activeTab === "apms" ? (
           <div className="animate-in fade-in zoom-in-95 duration-500 w-full">
             {children}
+          </div>
+        ) : activeTab === "offshore" ? (
+          <div className="animate-in fade-in zoom-in-95 duration-500 w-full">
+            {offshoreContent}
           </div>
         ) : (
           <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-16 animate-in fade-in slide-in-from-bottom-8 duration-700">

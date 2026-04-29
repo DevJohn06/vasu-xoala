@@ -415,7 +415,7 @@ export async function purgeRates(formData: FormData) {
 
   if (!pageSlug || !password) throw new Error("Missing slug or password")
 
-  const adminIdStr = session.user.id.replace('admin-', '')
+  const adminIdStr = session.user.id?.replace('admin-', '') || ''
   const adminId = Number(adminIdStr)
   if (!adminId) throw new Error("Invalid admin ID")
 

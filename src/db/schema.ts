@@ -54,3 +54,33 @@ export const pageSettings = sqliteTable('page_settings', {
     fxRates: Array<{ currencies: string; rate: string }>;
   }>(),
 });
+
+export const offshoreRates = sqliteTable('offshore_rate', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  pageSlug: text('page_slug').notNull(),
+  category: text('category').notNull(),
+  categoryNote: text('category_note'),
+  channelCode: text('channel_code').notNull(),
+  payIn: text('pay_in'),
+  setupFee: text('setup_fee'),
+  annualFee: text('annual_fee'),
+  otherFees: text('other_fees'),
+  rollingReserve: text('rolling_reserve'),
+  cbFee: text('cb_fee'),
+  refundFee: text('refund_fee'),
+  transactionFees: text('transaction_fees'),
+  settlementUsdt: text('settlement_usdt'),
+  transactionMinMax: text('transaction_min_max'),
+  settlementCycle: text('settlement_cycle'),
+  velocitiesLimits: text('velocities_limits'),
+  whitelistFtdTrusted: text('whitelist_ftd_trusted'),
+  processingCurrency: text('processing_currency'),
+  geoOpenForProcessing: text('geo_open_for_processing'),
+  mccCodes: text('mcc_codes'),
+  mid3dsOr2d: text('mid_3ds_or_2d'),
+  descriptor: text('descriptor'),
+  acceptanceRate: text('acceptance_rate'),
+  integrationType: text('integration_type'),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+});
+

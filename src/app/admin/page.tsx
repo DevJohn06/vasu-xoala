@@ -5,7 +5,13 @@ import { desc } from "drizzle-orm"
 import Link from "next/link"
 import SearchFilter from "./SearchFilter"
 import RatesPanel from "./RatesPanel"
+import OffshoreRatesPanel from "./OffshoreRatesPanel"
+import { seedOffshoreRates } from "./offshoreActions"
+import { OFFSHORE_MOCK_DATA } from "./offshoreConstants"
+import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
 import { CopyPin } from "@/components/ui/CopyPin"
+import { offshoreRates } from "@/db/schema"
+import { eq } from "drizzle-orm"
 
 import { Metadata } from "next"
 
@@ -18,6 +24,17 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
   const editUserId = searchParams?.editUserId;
   const editAdminId = searchParams?.editAdminId;
   const provType = searchParams?.provType || 'user';
+
+  const activeOffshoreSlug = searchParams?.rateTab === 'reseller' ? 'reseller' : 'direct';
+  let initialOffshoreRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, activeOffshoreSlug)).orderBy(desc(offshoreRates.id));
+
+  // Auto-seed if direct rates are empty
+  if (activeOffshoreSlug === 'direct' && initialOffshoreRates.length === 0) {
+    for (const row of OFFSHORE_MOCK_DATA) {
+      await db.insert(offshoreRates).values({ ...row, pageSlug: 'direct' });
+    }
+    initialOffshoreRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, 'direct')).orderBy(desc(offshoreRates.id));
+  }
 
   const allUsers = await db.select().from(users).orderBy(desc(users.id))
   const allAdmins = await db.select().from(admins).orderBy(desc(admins.id))
@@ -272,12 +289,16 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                   </tr>
                 )
               })}
-            </tbody>
+                        </tbody>
           </table>
         </div>
       </div>
 
-      <RatesPanel editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} rateTab={searchParams?.rateTab} />
+      <PricingTabsWrapper 
+        offshoreContent={<OffshoreRatesPanel initialRates={initialOffshoreRates} targetSlug={undefined} editRateId={searchParams?.editRateId} />}
+      >
+        <RatesPanel editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} rateTab={searchParams?.rateTab} />
+      </PricingTabsWrapper>
     </div>
   )
 }

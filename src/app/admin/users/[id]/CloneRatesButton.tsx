@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { copyGeneralRatesToUser } from "../../actions";
+import { copyGeneralOffshoreRatesToUser } from "../../offshoreActions";
 
 export default function CloneRatesButton({ userId }: { userId: number }) {
   const [isPending, setIsPending] = useState(false);
@@ -15,6 +16,7 @@ export default function CloneRatesButton({ userId }: { userId: number }) {
         formData.append("id", userId.toString());
         formData.append("source", source);
         await copyGeneralRatesToUser(formData);
+        await copyGeneralOffshoreRatesToUser(formData);
       } catch(err) {
          console.error(err);
          alert("An error occurred while cloning.");
