@@ -158,7 +158,7 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-zinc-50 mb-3">No offshore rates provisioned</h3>
                 <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                  Your custom offshore profile has been created, but allocations have not yet been assigned.
+                  Your custom offshore profile has been created, but allocations have not yet been assigned. Please contact your administrator to request a custom assignment.
                 </p>
               </div>
             ) : (
