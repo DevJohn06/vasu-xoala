@@ -289,12 +289,12 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                   </tr>
                 )
               })}
-                        </tbody>
+            </tbody>
           </table>
         </div>
       </div>
 
-      <PricingTabsWrapper 
+      <PricingTabsWrapper
         offshoreContent={<OffshoreRatesPanel initialRates={initialOffshoreRates} targetSlug={undefined} editRateId={searchParams?.editRateId} />}
       >
         <RatesPanel editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} rateTab={searchParams?.rateTab} />
