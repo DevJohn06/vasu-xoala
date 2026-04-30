@@ -29,7 +29,7 @@ export default async function Home() {
     console.error("Failed to fetch fees settings:", err);
   }
 
-  let dbOffshoreRates = [];
+  let dbOffshoreRates: any[] = [];
   try {
     dbOffshoreRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, "direct"));
   } catch (err) {
