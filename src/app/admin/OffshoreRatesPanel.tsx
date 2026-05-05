@@ -108,82 +108,118 @@ export default function OffshoreRatesPanel({
               </div>
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
+            <div className="border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-white dark:bg-zinc-950">
+              {/* Blue Title Header for Category */}
+              <div className="bg-[#A7C7E7] dark:bg-blue-900/40 border-b border-gray-300 dark:border-zinc-800 px-4 py-2 flex items-center justify-between">
+                <h4 className="text-[12px] font-bold text-gray-900 dark:text-blue-50 uppercase tracking-wide">
+                  {cat}
+                </h4>
+                <div className="flex items-center gap-4">
+                  <span className="text-[10px] text-gray-700 dark:text-blue-200 font-medium bg-white/30 dark:bg-black/20 px-2 py-0.5 rounded">
+                    {filteredCatRates.length} rows
+                  </span>
+                </div>
+              </div>
+
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-[11px] whitespace-nowrap">
-                  <thead className="bg-gray-50/50 dark:bg-zinc-800/50 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider border-b border-gray-100 dark:border-zinc-800">
-                    <tr>
-                      <th className="px-4 py-3 text-left sticky left-0 z-10 bg-gray-50/50 dark:bg-zinc-800/50">Actions</th>
-                      <th className="px-4 py-3 text-left">Channel Code</th>
-                      <th className="px-4 py-3 text-left">Pay In</th>
-                      <th className="px-4 py-3 text-left">Setup Fee</th>
-                      <th className="px-4 py-3 text-left">Annual Fee</th>
-                      <th className="px-4 py-3 text-left">Other Fees</th>
-                      <th className="px-4 py-3 text-left">Rolling Reserve</th>
-                      <th className="px-4 py-3 text-left">CB Fee</th>
-                      <th className="px-4 py-3 text-left">Refund Fee</th>
-                      <th className="px-4 py-3 text-left">Txn Fees</th>
-                      <th className="px-4 py-3 text-left">Settlement USDT</th>
-                      <th className="px-4 py-3 text-left">Txn Min-Max</th>
-                      <th className="px-4 py-3 text-left">Settlement Cycle</th>
-                      <th className="px-4 py-3 text-left">Velocities</th>
-                      <th className="px-4 py-3 text-left">Whitelist/FTD</th>
-                      <th className="px-4 py-3 text-left">Processing Cur</th>
-                      <th className="px-4 py-3 text-left">GEO Open</th>
-                      <th className="px-4 py-3 text-left">MCC Codes</th>
-                      <th className="px-4 py-3 text-left">MID 3Ds/2D</th>
-                      <th className="px-4 py-3 text-left">Descriptor</th>
-                      <th className="px-4 py-3 text-left">Acceptance</th>
-                      <th className="px-4 py-3 text-left">Integration</th>
+                <table className="w-full border-collapse text-left">
+                  <thead>
+                    <tr className="bg-[#f3f4f6] dark:bg-zinc-900 border-b border-gray-300 dark:border-zinc-800">
+                      <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[80px]">Actions</th>
+                      <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[12%]">Channel Code</th>
+                      <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[12%]">Pay In</th>
+                      <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[20%]">Fees</th>
+                      <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[30%]">Terms</th>
+                      <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 w-[20%]">Locations</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
+                  <tbody className="divide-y divide-gray-200 dark:divide-zinc-800 text-[11px]">
                     {filteredCatRates.length === 0 ? (
-                      <tr><td colSpan={22} className="px-4 py-12 text-center text-gray-400 italic">No rates found matching "{query}".</td></tr>
-                    ) : null}
-                    {filteredCatRates.map((rate) => (
-                        <tr key={rate.id} className="hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
-                          <td className="px-4 py-3 sticky left-0 z-10 bg-white dark:bg-zinc-900 group-hover:bg-gray-50 dark:group-hover:bg-zinc-800/50">
-                            <div className="flex justify-start items-center gap-1.5">
-                              <Link href={`?editRateId=${rate.id}`} className="p-1.5 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors bg-blue-50 dark:bg-blue-500/10 rounded" title="Edit">
+                      <tr>
+                        <td colSpan={6} className="px-4 py-10 text-center text-gray-400 italic">
+                          No rates found matching "{query}".
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredCatRates.map((rate) => (
+                        <tr key={rate.id} className="hover:bg-gray-50/50 dark:hover:bg-zinc-900/50 transition-colors">
+                          {/* ACTIONS */}
+                          <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800 sticky left-0 z-10 bg-white dark:bg-zinc-950">
+                            <div className="flex flex-col gap-2">
+                              <Link href={`?editRateId=${rate.id}`} className="p-1.5 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors bg-blue-50 dark:bg-blue-500/10 rounded flex items-center justify-center" title="Edit">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                               </Link>
                               <form action={deleteOffshoreRate}>
                                 <input type="hidden" name="id" value={rate.id} />
-                                <button type="submit" className="p-1.5 text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-500/10 transition-colors rounded" title="Delete">
+                                <button type="submit" className="w-full p-1.5 text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-500/10 transition-colors rounded flex items-center justify-center" title="Delete">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                                 </button>
                               </form>
                             </div>
                           </td>
-                          <td className="px-4 py-3 font-mono text-emerald-600 dark:text-emerald-400 font-semibold">{rate.channelCode}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] truncate">{rate.payIn || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.setupFee || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.annualFee || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] truncate">{rate.otherFees || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] truncate">{rate.rollingReserve || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.cbFee || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.refundFee || '-'}</td>
-                          <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium">{rate.transactionFees || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.settlementUsdt || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.transactionMinMax || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.settlementCycle || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.velocitiesLimits || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.whitelistFtdTrusted || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.processingCurrency || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.geoOpenForProcessing || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.mccCodes || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.mid3dsOr2d || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.descriptor || '-'}</td>
-                          <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400">{rate.acceptanceRate || '-'}</td>
-                          <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.integrationType || '-'}</td>
+
+                          {/* CHANNEL CODE */}
+                          <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800">
+                            <div className="font-bold text-gray-900 dark:text-zinc-100 whitespace-normal leading-tight">
+                              {rate.channelCode}
+                            </div>
+                          </td>
+
+                          {/* PAY IN */}
+                          <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800">
+                            <div className="font-medium text-gray-800 dark:text-zinc-200 whitespace-normal">
+                              {rate.payIn || '-'}
+                            </div>
+                          </td>
+
+                          {/* FEES */}
+                          <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800">
+                            <div className="space-y-3">
+                              {rate.setupFee && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Setup</span> {rate.setupFee}</div>}
+                              {rate.annualFee && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Annual</span> {rate.annualFee}</div>}
+                              {rate.transactionFees && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Txn</span> {rate.transactionFees}</div>}
+                              {rate.cbFee && <div><span className="font-bold block uppercase text-[9px] text-gray-400">CB</span> {rate.cbFee}</div>}
+                              {rate.refundFee && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Refund</span> {rate.refundFee}</div>}
+                              {rate.otherFees && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Other</span> {rate.otherFees}</div>}
+                            </div>
+                          </td>
+
+                          {/* TERMS */}
+                          <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              <div className="space-y-3">
+                                {rate.rollingReserve && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Rolling</span> {rate.rollingReserve}</div>}
+                                {rate.transactionMinMax && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Min-Max</span> {rate.transactionMinMax}</div>}
+                                {rate.settlementUsdt && <div><span className="font-bold block uppercase text-[9px] text-gray-400">USDT</span> {rate.settlementUsdt}</div>}
+                                {rate.settlementCycle && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Cycle</span> {rate.settlementCycle}</div>}
+                                {rate.acceptanceRate && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Acceptance</span> {rate.acceptanceRate}</div>}
+                              </div>
+                              <div className="space-y-3">
+                                {rate.mccCodes && <div><span className="font-bold block uppercase text-[9px] text-gray-400">MCC</span> {rate.mccCodes}</div>}
+                                {rate.mid3dsOr2d && <div><span className="font-bold block uppercase text-[9px] text-gray-400">MID</span> {rate.mid3dsOr2d}</div>}
+                                {rate.descriptor && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Descriptor</span> {rate.descriptor}</div>}
+                                {rate.whitelistFtdTrusted && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Whitelist</span> {rate.whitelistFtdTrusted}</div>}
+                                {rate.processingCurrency && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Currency</span> {rate.processingCurrency}</div>}
+                                {rate.velocitiesLimits && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Velocities</span> {rate.velocitiesLimits}</div>}
+                                {rate.integrationType && <div><span className="font-bold block uppercase text-[9px] text-gray-400">Type</span> {rate.integrationType}</div>}
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* LOCATIONS */}
+                          <td className="px-4 py-4 align-top">
+                            <div className="text-gray-700 dark:text-zinc-400 whitespace-normal leading-relaxed">
+                              {rate.geoOpenForProcessing || '-'}
+                            </div>
+                          </td>
                         </tr>
-                    ))}
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
               {!targetSlug && catRates.length > 0 && (
-                <div className="p-4 border-t border-gray-100 dark:border-zinc-800 flex justify-end bg-gray-50/30 dark:bg-zinc-800/30">
+                <div className="p-3 border-t border-gray-200 dark:border-zinc-800 flex justify-end bg-gray-50/50 dark:bg-zinc-800/30">
                   <PurgeOffshoreRatesButton targetSlug={activeSlug} category={cat} />
                 </div>
               )}
