@@ -8,6 +8,7 @@ import { MOCK_RATES } from "@/data/mock-rates";
 import { FeesTables } from "@/components/FeesTables";
 import { PricingTabsWrapper } from "@/components/PricingTabsWrapper";
 import { OffshoreRatesTable } from "@/components/OffshoreRatesTable";
+import { CryptoRatesTable } from "@/components/CryptoRatesTable";
 
 export default async function Home() {
   let dbRates: RateRowType[] = [];
@@ -34,6 +35,13 @@ export default async function Home() {
     dbOffshoreRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, "direct"));
   } catch (err) {
     console.error("Failed to fetch offshore rates:", err);
+  }
+
+  let cryptoFeesData = null;
+  let supportedCryptosData = null;
+  if (feesSettingsData) {
+    cryptoFeesData = feesSettingsData.cryptoFees;
+    supportedCryptosData = feesSettingsData.supportedCryptos;
   }
 
   return (
@@ -90,6 +98,7 @@ export default async function Home() {
               <OffshoreRatesTable rates={dbOffshoreRates} />
             )
           }
+          cryptoContent={<CryptoRatesTable cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} />}
         >
           {/* Rates Component */}
           <RatesTable rates={displayRates} />

@@ -53,6 +53,25 @@ export const pageSettings = sqliteTable('page_settings', {
     fxCalculationText: string;
     fxRates: Array<{ currencies: string; rate: string }>;
   }>(),
+  cryptoFees: text('crypto_fees', { mode: 'json' }).$type<{
+    payIn0to5: string;
+    payIn5to10: string;
+    payIn10plus: string;
+    payOut0to5: string;
+    payOut5to10: string;
+    payOut10plus: string;
+    topUp: string;
+    withdraw: string;
+    perTransaction: string;
+    miningFee: string;
+    fixedFees: string;
+  }>(),
+  supportedCryptos: text('supported_cryptos', { mode: 'json' }).$type<Array<{
+    id: string;
+    ethereum: string;
+    tron: string;
+    blockchains: string;
+  }>>(),
 });
 
 export const offshoreRates = sqliteTable('offshore_rate', {
