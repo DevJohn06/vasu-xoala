@@ -9,6 +9,7 @@ import { FeesTables } from "@/components/FeesTables"
 import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import { CryptoRatesTable } from "@/components/CryptoRatesTable"
+import { OtcRatesTable } from "@/components/OtcRatesTable"
 import Image from "next/image"
 
 export default async function RatePage(props: { params: Promise<{ slug: string }>, searchParams: Promise<{ error?: string }> }) {
@@ -114,9 +115,11 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
   
   let cryptoFeesData = null;
   let supportedCryptosData = null;
+  let otcFeesData = null;
   if (feesSettingsData) {
     cryptoFeesData = feesSettingsData.cryptoFees;
     supportedCryptosData = feesSettingsData.supportedCryptos;
+    otcFeesData = feesSettingsData.otcFees;
   }
 
   return (
@@ -185,6 +188,21 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
               </div>
             ) : (
               <CryptoRatesTable cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} isEditable={isAdmin} pageSlug={params.slug} />
+            )
+          }
+          otcContent={
+            !otcFeesData ? (
+              <div className="py-20 w-full text-center flex flex-col items-center max-w-lg mx-auto animate-in zoom-in-95 mt-8 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm p-8 relative z-10">
+                <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center mb-6 text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"/><path d="M9 7V2"/><path d="M15 7V2"/><path d="M12 7v4"/><path d="M4.5 12.5l2-2"/><path d="M19.5 12.5l-2-2"/><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"/></svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-zinc-50 mb-3">No OTC rates provisioned</h3>
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
+                  Your custom OTC profile has been created, but allocations have not yet been assigned. Please contact your administrator to request a custom assignment.
+                </p>
+              </div>
+            ) : (
+              <OtcRatesTable otcFees={otcFeesData} isEditable={isAdmin} pageSlug={params.slug} />
             )
           }
         >

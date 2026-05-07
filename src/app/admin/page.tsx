@@ -13,6 +13,7 @@ import { CopyPin } from "@/components/ui/CopyPin"
 import { offshoreRates, pageSettings } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { CryptoRatesTable } from "@/components/CryptoRatesTable"
+import { OtcRatesTable } from "@/components/OtcRatesTable"
 
 import { Metadata } from "next"
 
@@ -31,10 +32,12 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
 
   let cryptoFeesData = null;
   let supportedCryptosData = null;
-  const cryptoSettingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, "global")).limit(1);
-  if (cryptoSettingsArr.length > 0) {
-    cryptoFeesData = cryptoSettingsArr[0].cryptoFees;
-    supportedCryptosData = cryptoSettingsArr[0].supportedCryptos;
+  let otcFeesData = null;
+  const settingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, "global")).limit(1);
+  if (settingsArr.length > 0) {
+    cryptoFeesData = settingsArr[0].cryptoFees;
+    supportedCryptosData = settingsArr[0].supportedCryptos;
+    otcFeesData = settingsArr[0].otcFees;
   }
 
   // Auto-seed if direct rates are empty
@@ -306,6 +309,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
       <PricingTabsWrapper
         offshoreContent={<OffshoreRatesPanel initialRates={initialOffshoreRates} targetSlug={undefined} editRateId={searchParams?.editRateId} />}
         cryptoContent={<CryptoRatesTable isEditable={true} pageSlug="global" cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} />}
+        otcContent={<OtcRatesTable isEditable={true} pageSlug="global" otcFees={otcFeesData} />}
       >
         <RatesPanel editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} rateTab={searchParams?.rateTab} />
       </PricingTabsWrapper>

@@ -72,6 +72,18 @@ export const pageSettings = sqliteTable('page_settings', {
     tron: string;
     blockchains: string;
   }>>(),
+  otcFees: text('otc_fees', { mode: 'json' }).$type<{
+    typicalTransactionSettlementFee?: string;
+    typicalTransactionSettlement: string;
+    conversionSmallUpTo50k: string;
+    conversionSmall50kTo250k: string;
+    conversionSmall250kTo1m: string;
+    wireTransferSmall: string;
+    conversionLarge1mTo5m: string;
+    conversionLarge5mTo10m: string;
+    conversionLarge10mPlus: string;
+    wireTransferLarge: string;
+  }>(),
 });
 
 export const offshoreRates = sqliteTable('offshore_rate', {

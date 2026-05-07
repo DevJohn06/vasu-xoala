@@ -6,17 +6,19 @@ const TABS = [
   { id: "apms", label: "APMs", isLocked: false },
   { id: "offshore", label: "Offshore Credit Card", isLocked: false },
   { id: "crypto", label: "Crypto Solution", isLocked: false },
-  { id: "otc", label: "OTC Desk", isLocked: true },
+  { id: "otc", label: "OTC Desk", isLocked: false },
 ];
 
 export function PricingTabsWrapper({ 
   children,
   offshoreContent,
-  cryptoContent
+  cryptoContent,
+  otcContent
 }: { 
   children?: React.ReactNode;
   offshoreContent?: React.ReactNode;
   cryptoContent?: React.ReactNode;
+  otcContent?: React.ReactNode;
 }) {
   const [activeTab, setActiveTab] = useState("apms");
 
@@ -67,6 +69,10 @@ export function PricingTabsWrapper({
         ) : activeTab === "crypto" ? (
           <div className="animate-in fade-in zoom-in-95 duration-500 w-full">
             {cryptoContent}
+          </div>
+        ) : activeTab === "otc" ? (
+          <div className="animate-in fade-in zoom-in-95 duration-500 w-full">
+            {otcContent}
           </div>
         ) : (
           <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
