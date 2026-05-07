@@ -4,23 +4,24 @@ import React, { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Check initial state
-    if (document.documentElement.classList.contains("dark")) {
-      setIsDark(true);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      if (!document.documentElement.classList.contains("light")) {
-        // Only set dark if we don't have explicit light class (assuming no storage yet)
-        // Wait, if no class and no storage, let's just default to light (white version)
-        // since user explicitly asked for white version. We will force light class.
-      }
-    }
-    // Let's explicitly default to light mode on mount.
+    setMounted(true);
     document.documentElement.classList.remove("dark");
     document.documentElement.classList.add("light");
     setIsDark(false);
   }, []);
+
+  if (!mounted) {
+    return (
+      <button className="p-2 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 text-gray-500 dark:text-zinc-400 focus:outline-none opacity-50" aria-label="Loading Theme Toggle">
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+    );
+  }
 
   const toggleTheme = () => {
     if (isDark) {

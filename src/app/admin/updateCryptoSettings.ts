@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 export async function updateCryptoFee(pageSlug: string, field: string, value: string) {
   // Get existing settings
   const settingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, pageSlug)).limit(1);
-  let currentSettings = settingsArr.length > 0 ? settingsArr[0] : null;
+  const currentSettings = settingsArr.length > 0 ? settingsArr[0] : null;
 
   if (!currentSettings) {
     // Create if doesn't exist
@@ -36,17 +36,17 @@ export async function updateCryptoFee(pageSlug: string, field: string, value: st
 
 export async function updateSupportedCryptos(pageSlug: string, cryptos: any[]) {
   const settingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, pageSlug)).limit(1);
-  let currentSettings = settingsArr.length > 0 ? settingsArr[0] : null;
+  const currentSettings = settingsArr.length > 0 ? settingsArr[0] : null;
 
   if (!currentSettings) {
     await db.insert(pageSettings).values({
       pageSlug,
-      supportedCryptos: cryptos
+      supportedCryptos: cryptos as any
     });
   } else {
     await db.update(pageSettings)
       .set({
-        supportedCryptos: cryptos
+        supportedCryptos: cryptos as any
       })
       .where(eq(pageSettings.pageSlug, pageSlug));
   }

@@ -119,7 +119,7 @@ export default async function Home() {
             &copy; {new Date().getFullYear()} Vasu Inc. All rights reserved.
           </p>
           <p className="text-xs text-gray-400 dark:text-zinc-600 mt-2 max-w-md">
-            This is the default public entry template for Vasu's services. Standard retail pricing details, generic offerings, and organizational capabilities are published here.
+            This is the default public entry template for Vasu&apos;s services. Standard retail pricing details, generic offerings, and organizational capabilities are published here.
           </p>
         </div>
       </footer>

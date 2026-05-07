@@ -96,7 +96,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
           <tbody className="divide-y divide-gray-200 dark:divide-zinc-800">
             <tr>
               <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 w-1/3 align-top">
-                Clients' currencies<br />
+                Clients&apos; currencies<br />
                 <span className="text-xs text-gray-500">(Deposit/Withdrawal | PAY-IN/PAY-OUT)</span>
               </td>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 align-middle">

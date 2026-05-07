@@ -217,7 +217,7 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
             © {new Date().getFullYear()} Vasu Inc. All rights reserved.
           </p>
           <p className="text-xs text-gray-400 dark:text-zinc-600 mt-2 max-w-md">
-            This is a private custom entry template for Vasu's services. Pricing details are mapped solely to your organization.
+            This is a private custom entry template for Vasu&apos;s services. Pricing details are mapped solely to your organization.
           </p>
         </div>
       </footer>

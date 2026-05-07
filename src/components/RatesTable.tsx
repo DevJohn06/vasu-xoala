@@ -130,8 +130,8 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                   </td>
                 </tr>
               ) : null}
-              {filteredRates.map((rate) => {
-                const rowKey = String(rate._key || rate.id || Math.random());
+              {filteredRates.map((rate, index) => {
+                const rowKey = String(rate._key || rate.id || `fallback-row-${index}`);
                 return (
                   <tr
                     key={rowKey}
