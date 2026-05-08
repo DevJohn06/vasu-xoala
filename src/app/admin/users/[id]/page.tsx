@@ -9,6 +9,7 @@ import CloneRatesButton from "./CloneRatesButton"
 import { PricingTabsWrapper } from "@/components/PricingTabsWrapper"
 import { CopyPin } from "@/components/ui/CopyPin"
 import { CryptoRatesTable } from "@/components/CryptoRatesTable"
+import { OtcRatesTable } from "@/components/OtcRatesTable"
 import { pageSettings } from "@/db/schema"
 
 import { Metadata } from "next"
@@ -45,11 +46,13 @@ export default async function UserProfilePage(props: Props) {
 
   let cryptoFeesData = null;
   let supportedCryptosData = null;
+  let otcFeesData = null;
   if (user.pageSlug) {
     const cryptoSettingsArr = await db.select().from(pageSettings).where(eq(pageSettings.pageSlug, user.pageSlug)).limit(1);
     if (cryptoSettingsArr.length > 0) {
       cryptoFeesData = cryptoSettingsArr[0].cryptoFees;
       supportedCryptosData = cryptoSettingsArr[0].supportedCryptos;
+      otcFeesData = cryptoSettingsArr[0].otcFees;
     }
   }
 
@@ -97,6 +100,7 @@ export default async function UserProfilePage(props: Props) {
          <PricingTabsWrapper
            offshoreContent={<OffshoreRatesPanel initialRates={userOffshoreRates} targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} />}
            cryptoContent={<CryptoRatesTable isEditable={true} pageSlug={user.pageSlug || ""} cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} />}
+           otcContent={<OtcRatesTable isEditable={true} pageSlug={user.pageSlug || ""} otcFees={otcFeesData} />}
          >
            <RatesPanel targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} />
          </PricingTabsWrapper>

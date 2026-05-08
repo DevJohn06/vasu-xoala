@@ -28,6 +28,8 @@ export function CryptoRatesTable({
   isEditable?: boolean;
   pageSlug?: string;
 }) {
+  const [isEditingCryptos, setIsEditingCryptos] = useState(false);
+
   const defaultFees = {
     payIn0to5: "1.40%",
     payIn5to10: "1.20%",
@@ -86,7 +88,7 @@ export function CryptoRatesTable({
     return (
       <div className="group flex items-center gap-2">
         <span className={labelClassName}>{getFee(fieldKey)}</span>
-        <button onClick={() => setIsEditing(true)} className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-blue-500 transition-opacity">
+        <button onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-blue-500 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
         </button>
       </div>
@@ -102,9 +104,8 @@ export function CryptoRatesTable({
 
     const cryptos = supportedCryptos && supportedCryptos.length > 0 ? supportedCryptos : defaultCryptos;
 
-  const EditableCryptosList = ({ initialCryptos, isEditable, pageSlug }: any) => {
+  const EditableCryptosList = ({ initialCryptos, isEditable, pageSlug, isEditing, setIsEditing }: any) => {
     const [cryptosList, setCryptosList] = useState(initialCryptos);
-    const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
     const handleSave = async () => {
@@ -175,10 +176,7 @@ export function CryptoRatesTable({
     }
 
     return (
-      <div className="flex flex-col flex-1 bg-[#D9EAF7] dark:bg-blue-900/10 group/table relative">
-        <button onClick={() => setIsEditing(true)} className="absolute top-2 right-2 opacity-0 group-hover/table:opacity-100 bg-white dark:bg-zinc-800 p-1.5 rounded shadow-sm border border-gray-200 dark:border-zinc-700 text-gray-500 hover:text-blue-500 transition-opacity z-10">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
-        </button>
+      <div className="flex flex-col flex-1 bg-[#D9EAF7] dark:bg-blue-900/10 relative">
         {cryptosList.map((c: any, i: number) => (
           <div key={c.id} className="grid grid-cols-3">
             <div className={`p-3 border-r border-gray-300 dark:border-zinc-800 text-[11px] text-gray-800 dark:text-zinc-200 ${i !== cryptosList.length - 1 ? 'border-b' : ''}`}>{c.ethereum}</div>
@@ -357,10 +355,15 @@ export function CryptoRatesTable({
 
         {/* Right Side: Supported Cryptocurrencies */}
         <div className="w-full xl:w-1/3 border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-[#E6F0FA] dark:bg-blue-900/20 flex flex-col h-fit">
-          <div className="bg-[#E6F0FA] dark:bg-blue-900/40 border-b border-gray-300 dark:border-zinc-800 px-4 py-3 flex items-center justify-center">
+          <div className="bg-[#E6F0FA] dark:bg-blue-900/40 border-b border-gray-300 dark:border-zinc-800 px-4 py-3 flex items-center justify-center relative">
             <h3 className="text-[11px] font-bold text-gray-900 dark:text-zinc-100 uppercase tracking-wide text-center">
               SUPPORTED CRYPTOCURRENCIES
             </h3>
+            {isEditable && !isEditingCryptos && (
+              <button onClick={() => setIsEditingCryptos(true)} className="absolute right-3 bg-white dark:bg-zinc-800 p-1.5 rounded shadow-sm border border-gray-200 dark:border-zinc-700 text-gray-500 hover:text-blue-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
+              </button>
+            )}
           </div>
 
           <div className="grid grid-cols-3 border-b border-gray-300 dark:border-zinc-800 bg-[#E6F0FA] dark:bg-blue-900/30">
@@ -375,7 +378,7 @@ export function CryptoRatesTable({
             </div>
           </div>
 
-          <EditableCryptosList initialCryptos={cryptos} isEditable={isEditable} pageSlug={pageSlug} />
+          <EditableCryptosList initialCryptos={cryptos} isEditable={isEditable} pageSlug={pageSlug} isEditing={isEditingCryptos} setIsEditing={setIsEditingCryptos} />
           
           <div className="p-3 border-t border-gray-300 dark:border-zinc-800 bg-[#D9EAF7] dark:bg-blue-900/10">
              <div className="text-[11px] text-gray-800 dark:text-zinc-200">Plus+ any ERC20 token</div>

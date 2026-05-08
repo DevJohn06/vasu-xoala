@@ -9,6 +9,7 @@ import { FeesTables } from "@/components/FeesTables";
 import { PricingTabsWrapper } from "@/components/PricingTabsWrapper";
 import { OffshoreRatesTable } from "@/components/OffshoreRatesTable";
 import { CryptoRatesTable } from "@/components/CryptoRatesTable";
+import { OtcRatesTable } from "@/components/OtcRatesTable";
 
 export default async function Home() {
   let dbRates: RateRowType[] = [];
@@ -39,9 +40,11 @@ export default async function Home() {
 
   let cryptoFeesData = null;
   let supportedCryptosData = null;
+  let otcFeesData = null;
   if (feesSettingsData) {
     cryptoFeesData = feesSettingsData.cryptoFees;
     supportedCryptosData = feesSettingsData.supportedCryptos;
+    otcFeesData = feesSettingsData.otcFees;
   }
 
   return (
@@ -99,6 +102,7 @@ export default async function Home() {
             )
           }
           cryptoContent={<CryptoRatesTable cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} />}
+          otcContent={<OtcRatesTable otcFees={otcFeesData} />}
         >
           {/* Rates Component */}
           <RatesTable rates={displayRates} />

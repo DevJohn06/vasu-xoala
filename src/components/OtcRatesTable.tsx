@@ -13,6 +13,7 @@ export type OtcFeesType = {
   conversionLarge5mTo10m?: string;
   conversionLarge10mPlus?: string;
   wireTransferLarge?: string;
+  typicalTransactionSettlementFees?: string;
 };
 
 export function OtcRatesTable({
@@ -33,7 +34,8 @@ export function OtcRatesTable({
     conversionLarge1mTo5m: "1.50%",
     conversionLarge5mTo10m: "1.25%",
     conversionLarge10mPlus: "1.00%",
-    wireTransferLarge: "Network or institution dependent at the time of transaction – purely pass through."
+    wireTransferLarge: "Network or institution dependent at the time of transaction – purely pass through.",
+    typicalTransactionSettlementFees: ""
   };
 
   const getFee = (key: keyof OtcFeesType) => {
@@ -89,7 +91,7 @@ export function OtcRatesTable({
     return (
       <div className="group flex items-center gap-2">
         <span className={labelClassName}>{getFee(fieldKey)}</span>
-        <button onClick={() => setIsEditing(true)} className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-blue-500 transition-opacity">
+        <button onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-blue-500 transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path><path d="m15 5 4 4"></path></svg>
         </button>
       </div>
@@ -130,8 +132,11 @@ export function OtcRatesTable({
             <span className="text-[12px] font-bold text-gray-900 dark:text-zinc-100">Transaction Settlement</span>
           </div>
           <div className="grid grid-cols-12 border-b border-gray-300 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-            <div className="col-span-10 p-4 border-r border-gray-300 dark:border-zinc-800 flex items-center">
+            <div className="col-span-8 p-4 border-r border-gray-300 dark:border-zinc-800 flex items-center">
               <span className="text-[12px] font-bold text-gray-900 dark:text-zinc-100">Typical Transaction Settlement</span>
+            </div>
+            <div className="col-span-2 p-4 bg-[#D9EAF7] dark:bg-blue-900/10 border-r border-gray-300 dark:border-zinc-800 flex items-center justify-center text-center">
+              <EditableFee fieldKey="typicalTransactionSettlementFees" />
             </div>
             <div className="col-span-2 p-4 bg-[#D9EAF7] dark:bg-blue-900/10 flex items-center justify-center text-center">
               <EditableFee fieldKey="typicalTransactionSettlement" asTextArea />

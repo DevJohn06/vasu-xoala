@@ -176,7 +176,7 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
             )
           }
           cryptoContent={
-            !cryptoFeesData ? (
+            !cryptoFeesData && !isAdmin ? (
               <div className="py-20 w-full text-center flex flex-col items-center max-w-lg mx-auto animate-in zoom-in-95 mt-8 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm p-8 relative z-10">
                 <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center mb-6 text-gray-400">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"/><path d="M9 7V2"/><path d="M15 7V2"/><path d="M12 7v4"/><path d="M4.5 12.5l2-2"/><path d="M19.5 12.5l-2-2"/><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"/></svg>
@@ -191,7 +191,7 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
             )
           }
           otcContent={
-            !otcFeesData ? (
+            !otcFeesData && !isAdmin ? (
               <div className="py-20 w-full text-center flex flex-col items-center max-w-lg mx-auto animate-in zoom-in-95 mt-8 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm p-8 relative z-10">
                 <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center mb-6 text-gray-400">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"/><path d="M9 7V2"/><path d="M15 7V2"/><path d="M12 7v4"/><path d="M4.5 12.5l2-2"/><path d="M19.5 12.5l-2-2"/><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"/></svg>
