@@ -74,20 +74,20 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
         {Object.entries(groupedRates).map(([category, categoryRates]) => {
           const query = searchQueries[category] || "";
           const filteredCatRates = query.trim()
-            ? categoryRates.filter(r => 
-                r.channelCode.toLowerCase().includes(query.toLowerCase()) || 
-                r.processingCurrency?.toLowerCase().includes(query.toLowerCase()) ||
-                r.geoOpenForProcessing?.toLowerCase().includes(query.toLowerCase())
-              )
+            ? categoryRates.filter(r =>
+              r.channelCode.toLowerCase().includes(query.toLowerCase()) ||
+              r.processingCurrency?.toLowerCase().includes(query.toLowerCase()) ||
+              r.geoOpenForProcessing?.toLowerCase().includes(query.toLowerCase())
+            )
             : categoryRates;
-          
+
           const sectionNote = categoryRates.find(r => r.categoryNote)?.categoryNote;
 
           return (
             <div key={category} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
               {/* Table Container with Blue Header */}
               <div className="border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-white dark:bg-zinc-950">
-                
+
                 {/* Blue Title Header */}
                 <div className="bg-[#A7C7E7] dark:bg-blue-900/40 border-b border-gray-300 dark:border-zinc-800 px-4 py-2.5 flex items-center justify-between">
                   <h3 className="text-[13px] font-bold text-gray-900 dark:text-blue-50 uppercase tracking-wide">
@@ -108,11 +108,11 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
                   <table className="w-full border-collapse text-left">
                     <thead>
                       <tr className="bg-[#f3f4f6] dark:bg-zinc-900 border-b border-gray-300 dark:border-zinc-800">
-                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[15%]">Channel Code</th>
-                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[15%]">Pay In</th>
-                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[20%]">Fees</th>
-                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[30%]">Terms</th>
-                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 w-[20%]">Acquiring Banks Locations</th>
+                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[15%] text-center">Channel Code</th>
+                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[15%] text-center">Pay In</th>
+                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[20%] text-center">Fees</th>
+                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[30%] text-center">Terms</th>
+                        <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 w-[20%] text-center">Acquiring Banks Locations</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-zinc-800">

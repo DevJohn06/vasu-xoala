@@ -24,12 +24,12 @@ const getCountryFlag = (countryName: string) => {
   const match = COUNTRIES.find(c => c.name === countryName);
   if (match?.code) {
     return (
-      <img 
-        src={`https://flagcdn.com/w40/${match.code}.png`} 
-        srcSet={`https://flagcdn.com/w80/${match.code}.png 2x`} 
-        width="24" 
-        alt={match.name} 
-        className="inline-block object-cover shadow-sm rounded-[2px]" 
+      <img
+        src={`https://flagcdn.com/w40/${match.code}.png`}
+        srcSet={`https://flagcdn.com/w80/${match.code}.png 2x`}
+        width="24"
+        alt={match.name}
+        className="inline-block object-cover shadow-sm rounded-[2px]"
       />
     );
   }
@@ -52,15 +52,15 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
 
   const filteredRates = searchQuery.trim()
     ? rates.filter(r => {
-        const q = searchQuery.toLowerCase();
-        return (
-          (r.country && r.country.toLowerCase().includes(q)) ||
-          (r.currency && r.currency.toLowerCase().includes(q)) ||
-          (r.channelCode && r.channelCode.toLowerCase().includes(q)) ||
-          (r.paymentMethod && r.paymentMethod.toLowerCase().includes(q)) ||
-          (r.verticals && r.verticals.toLowerCase().includes(q))
-        );
-      })
+      const q = searchQuery.toLowerCase();
+      return (
+        (r.country && r.country.toLowerCase().includes(q)) ||
+        (r.currency && r.currency.toLowerCase().includes(q)) ||
+        (r.channelCode && r.channelCode.toLowerCase().includes(q)) ||
+        (r.paymentMethod && r.paymentMethod.toLowerCase().includes(q)) ||
+        (r.verticals && r.verticals.toLowerCase().includes(q))
+      );
+    })
     : rates;
 
   if (!rates || rates.length === 0) {
@@ -121,16 +121,16 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
             <thead className="bg-gray-50/80 dark:bg-zinc-900/80 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider border-b border-gray-200 dark:border-zinc-800 sticky top-0 z-10 backdrop-blur-md">
               <tr>
                 <th className="px-2 py-3 whitespace-nowrap">Currency</th>
-                <th className="px-2 py-3">Channel</th>
-                <th className="px-2 py-3">Method</th>
-                <th className="px-2 py-3">Verticals</th>
-                <th className="px-2 py-3">Deposit</th>
-                <th className="px-2 py-3">Dep. Limit</th>
-                <th className="px-2 py-3">Withdrawal</th>
-                <th className="px-2 py-3">W/D Limit</th>
-                <th className="px-2 py-3">Fees / Notes</th>
-                <th className="px-2 py-3">Settlement</th>
-                <th className="px-2 py-3">Cycle</th>
+                <th className="px-2 py-3 text-center">Channel</th>
+                <th className="px-2 py-3 text-center">Method</th>
+                <th className="px-2 py-3 text-center">Verticals</th>
+                <th className="px-2 py-3 text-center">Deposit</th>
+                <th className="px-2 py-3 text-center">Deposit Limit</th>
+                <th className="px-2 py-3 text-center">Withdrawal</th>
+                <th className="px-2 py-3 text-center">Withdrawal Limit</th>
+                <th className="px-2 py-3 text-center">Notes</th>
+                <th className="px-2 py-3 text-center">Settlement</th>
+                <th className="px-2 py-3 text-center">Cycle</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-zinc-800/50">
