@@ -22,6 +22,17 @@ export type RateRowType = {
 
 const getCountryFlag = (countryName: string) => {
   const match = COUNTRIES.find(c => c.name === countryName);
+  if (match?.code) {
+    return (
+      <img 
+        src={`https://flagcdn.com/w40/${match.code}.png`} 
+        srcSet={`https://flagcdn.com/w80/${match.code}.png 2x`} 
+        width="24" 
+        alt={match.name} 
+        className="inline-block object-cover shadow-sm rounded-[2px]" 
+      />
+    );
+  }
   return match?.flag || "🏳️";
 };
 
@@ -144,7 +155,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                   >
                     <td className="px-2 py-3 whitespace-nowrap align-top">
                       <div className="flex items-center gap-2">
-                        <span title={rate.country} aria-label={rate.country} className="text-2xl cursor-help drop-shadow-sm leading-none">
+                        <span title={rate.country} aria-label={rate.country} className="inline-flex items-center justify-center w-6 h-6 text-2xl cursor-help drop-shadow-sm leading-none">
                           {getCountryFlag(rate.country || "")}
                         </span>
                         <span className="text-emerald-600 dark:text-emerald-400 font-medium">

@@ -15,6 +15,17 @@ import { COUNTRIES } from "@/data/countries"
 
 const getCountryFlag = (countryName: string) => {
   const match = COUNTRIES.find(c => c.name === countryName);
+  if (match?.code) {
+    return (
+      <img 
+        src={`https://flagcdn.com/w40/${match.code}.png`} 
+        srcSet={`https://flagcdn.com/w80/${match.code}.png 2x`} 
+        width="24" 
+        alt={match.name} 
+        className="inline-block object-cover shadow-sm rounded-[2px]" 
+      />
+    );
+  }
   return match?.flag || "🏳️";
 };
 
@@ -128,7 +139,7 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
                       </div>
                     </td>
                     <td className="px-4 py-3 text-gray-900 dark:text-gray-100" title={rate.country}>
-                      <span className="text-2xl mr-1.5 drop-shadow-sm leading-none align-middle">{getCountryFlag(rate.country || "")}</span>
+                      <span className="inline-flex items-center justify-center w-6 h-6 mr-1.5 align-middle text-2xl drop-shadow-sm leading-none">{getCountryFlag(rate.country || "")}</span>
                       <span className="font-semibold text-emerald-600 dark:text-emerald-400">{rate.currency}</span>
                     </td>
                     <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[10px]">{rate.channelCode || '-'}</td>
