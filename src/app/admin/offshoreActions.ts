@@ -177,9 +177,11 @@ export async function copyGeneralOffshoreRatesToUser(formData: FormData) {
   await db.delete(offshoreRates).where(eq(offshoreRates.pageSlug, user.pageSlug))
 
   const source = formData.get("source") as string || "general-rates"
+  let offshoreSource = "reseller";
+  if (source === "general-rates-direct") offshoreSource = "direct";
 
   // Fetch general offshore rates
-  const generalRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, source))
+  const generalRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, offshoreSource))
   if (generalRates.length > 0) {
     const newRates = generalRates.map(r => ({
       pageSlug: user.pageSlug!,
@@ -211,6 +213,65 @@ export async function copyGeneralOffshoreRatesToUser(formData: FormData) {
   }
 
   revalidatePath(`/admin/users/${id}`)
+}
+
+export async function cloneOffshoreCategoryToUser(formData: FormData) {
+  const session = await auth()
+  if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
+
+  const userSlug = formData.get("userSlug") as string
+  const source = formData.get("source") as string
+  const category = formData.get("category") as string
+
+  if (!userSlug || !source || !category) return
+
+  await db.delete(offshoreRates).where(
+    and(
+      eq(offshoreRates.pageSlug, userSlug),
+      eq(offshoreRates.category, category)
+    )
+  )
+
+  const offshoreSource = source === "direct" ? "direct" : "reseller";
+
+  const sourceRates = await db.select().from(offshoreRates).where(
+    and(
+      eq(offshoreRates.pageSlug, offshoreSource),
+      eq(offshoreRates.category, category)
+    )
+  )
+
+  if (sourceRates.length > 0) {
+    const newRates = sourceRates.map(r => ({
+      pageSlug: userSlug,
+      category: r.category,
+      categoryNote: r.categoryNote,
+      channelCode: r.channelCode,
+      payIn: r.payIn,
+      setupFee: r.setupFee,
+      annualFee: r.annualFee,
+      otherFees: r.otherFees,
+      rollingReserve: r.rollingReserve,
+      cbFee: r.cbFee,
+      refundFee: r.refundFee,
+      transactionFees: r.transactionFees,
+      settlementUsdt: r.settlementUsdt,
+      transactionMinMax: r.transactionMinMax,
+      settlementCycle: r.settlementCycle,
+      velocitiesLimits: r.velocitiesLimits,
+      whitelistFtdTrusted: r.whitelistFtdTrusted,
+      processingCurrency: r.processingCurrency,
+      geoOpenForProcessing: r.geoOpenForProcessing,
+      mccCodes: r.mccCodes,
+      mid3dsOr2d: r.mid3dsOr2d,
+      descriptor: r.descriptor,
+      acceptanceRate: r.acceptanceRate,
+      integrationType: r.integrationType,
+    }))
+    await db.insert(offshoreRates).values(newRates)
+  }
+
+  revalidatePath(`/admin`)
 }
 
 export async function purgeOffshoreRates(formData: FormData) {

@@ -8,6 +8,7 @@ import AddOffshoreRateModal from "./AddOffshoreRateModal"
 import EditOffshoreRateModal from "./EditOffshoreRateModal"
 import UploadOffshoreRatesModal from "./UploadOffshoreRatesModal"
 import CloneOffshoreDirectButton from "./CloneOffshoreDirectButton"
+import CloneOffshoreCategoryToUserButton from "./CloneOffshoreCategoryToUserButton"
 import PurgeOffshoreRatesButton from "./PurgeOffshoreRatesButton"
 
 export default function OffshoreRatesPanel({ 
@@ -113,6 +114,9 @@ export default function OffshoreRatesPanel({
                 <div className="flex items-center gap-4">
                   {!targetSlug && rateTab === 'reseller' && (
                     <CloneOffshoreDirectButton category={cat} />
+                  )}
+                  {targetSlug && (
+                    <CloneOffshoreCategoryToUserButton targetSlug={targetSlug} category={cat} />
                   )}
                   <span className="text-[10px] text-gray-700 dark:text-blue-200 font-medium bg-white/30 dark:bg-black/20 px-2 py-0.5 rounded">
                     {filteredCatRates.length} rows
