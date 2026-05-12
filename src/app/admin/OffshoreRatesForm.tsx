@@ -32,8 +32,8 @@ export default function OffshoreRatesForm({ defaultSlug, fixedCategory }: { defa
             )}
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Channel Code *</label>
-            <input name="channelCode" type="text" required placeholder="e.g. USDPTD-1001" className="w-full px-3 py-2 text-sm border rounded bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-emerald-500" />
+            <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Channel Code(s) *</label>
+            <textarea name="channelCode" required placeholder="e.g. USDPTD-1001, EURPTD-1002" rows={2} className="w-full px-3 py-2 text-sm border rounded bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-emerald-500 resize-y" />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Integration Type</label>

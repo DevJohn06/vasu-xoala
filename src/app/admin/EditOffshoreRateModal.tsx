@@ -63,8 +63,8 @@ export default function EditOffshoreRateModal({ rate }: { rate: any }) {
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Channel Code *</label>
-                <input name="channelCode" type="text" required defaultValue={rate.channelCode} className="w-full px-3 py-2 text-sm border rounded bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500" />
+                <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Channel Code(s) *</label>
+                <textarea name="channelCode" required defaultValue={rate.channelCode} rows={2} className="w-full px-3 py-2 text-sm border rounded bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 outline-none focus:ring-1 focus:ring-blue-500 resize-y" />
               </div>
               <div className="space-y-1">
                 <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Integration Type</label>
