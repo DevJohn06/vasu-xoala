@@ -107,18 +107,31 @@ export async function updateOffshoreRate(formData: FormData) {
   if (returnUrl) redirect(returnUrl)
 }
 
-export async function cloneOffshoreDirectToReseller() {
+export async function cloneOffshoreDirectToReseller(category?: string) {
   const session = await auth()
   if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
-  // Delete existing reseller offshore rates
-  await db.delete(offshoreRates).where(eq(offshoreRates.pageSlug, "general-rates"))
+  if (category) {
+    await db.delete(offshoreRates).where(
+      and(
+        eq(offshoreRates.pageSlug, "reseller"),
+        eq(offshoreRates.category, category)
+      )
+    )
+  } else {
+    await db.delete(offshoreRates).where(eq(offshoreRates.pageSlug, "reseller"))
+  }
 
   // Fetch direct offshore rates
-  const directRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, "general-rates-direct"))
+  let directRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, "direct"))
+  
+  if (category) {
+    directRates = directRates.filter(r => r.category === category)
+  }
+
   if (directRates.length > 0) {
     const newRates = directRates.map(r => ({
-      pageSlug: "general-rates",
+      pageSlug: "reseller",
       category: r.category,
       categoryNote: r.categoryNote,
       channelCode: r.channelCode,

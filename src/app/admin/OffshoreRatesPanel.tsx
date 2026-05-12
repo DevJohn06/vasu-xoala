@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import AddOffshoreRateModal from "./AddOffshoreRateModal"
 import EditOffshoreRateModal from "./EditOffshoreRateModal"
 import UploadOffshoreRatesModal from "./UploadOffshoreRatesModal"
-import CloneDirectButton from "./CloneDirectButton"
+import CloneOffshoreDirectButton from "./CloneOffshoreDirectButton"
 import PurgeOffshoreRatesButton from "./PurgeOffshoreRatesButton"
 
 export default function OffshoreRatesPanel({ 
@@ -67,11 +67,7 @@ export default function OffshoreRatesPanel({
             {allRates.length} row{allRates.length !== 1 ? "s" : ""} total
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          {!targetSlug && rateTab === 'reseller' && (
-            <CloneDirectButton />
-          )}
-        </div>
+
       </div>
 
       {categories.map(cat => {
@@ -115,6 +111,9 @@ export default function OffshoreRatesPanel({
                   {cat}
                 </h4>
                 <div className="flex items-center gap-4">
+                  {!targetSlug && rateTab === 'reseller' && (
+                    <CloneOffshoreDirectButton category={cat} />
+                  )}
                   <span className="text-[10px] text-gray-700 dark:text-blue-200 font-medium bg-white/30 dark:bg-black/20 px-2 py-0.5 rounded">
                     {filteredCatRates.length} rows
                   </span>
