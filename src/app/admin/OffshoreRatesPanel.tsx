@@ -125,7 +125,7 @@ export default function OffshoreRatesPanel({
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-left">
+                <table className="w-full border-collapse text-left font-semibold">
                   <thead>
                     <tr className="bg-[#f3f4f6] dark:bg-zinc-900 border-b border-gray-300 dark:border-zinc-800">
                       <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[80px]">Actions</th>
@@ -170,7 +170,7 @@ export default function OffshoreRatesPanel({
 
                           {/* PAY IN */}
                           <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800">
-                            <div className="font-medium text-gray-800 dark:text-zinc-200 whitespace-normal">
+                            <div className="font-bold text-gray-800 dark:text-zinc-200 whitespace-normal">
                               {rate.payIn || '-'}
                             </div>
                           </td>
@@ -211,7 +211,7 @@ export default function OffshoreRatesPanel({
 
                           {/* LOCATIONS */}
                           <td className="px-4 py-4 align-top">
-                            <div className="text-gray-700 dark:text-zinc-400 whitespace-normal leading-relaxed">
+                            <div className="text-gray-700 dark:text-zinc-400 whitespace-normal leading-relaxed font-bold">
                               {rate.geoOpenForProcessing || '-'}
                             </div>
                           </td>

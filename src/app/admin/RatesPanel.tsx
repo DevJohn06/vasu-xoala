@@ -104,7 +104,7 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
 
       <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[11px] whitespace-nowrap">
+          <table className="w-full text-left text-[11px] whitespace-nowrap font-semibold">
             <thead className="bg-gray-50/50 dark:bg-zinc-800/50 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider border-b border-gray-100 dark:border-zinc-800">
               <tr>
                 <th className="px-4 py-3 text-left">Actions</th>
@@ -145,9 +145,9 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
                     <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[10px]">{rate.channelCode || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.paymentMethod}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[120px] truncate" title={rate.verticals || ''}>{rate.verticals || '-'}</td>
-                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">{formatText(rate.deposit) || '-'}</td>
+                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-bold min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">{formatText(rate.deposit) || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] whitespace-normal align-top leading-relaxed">{rate.depositLimit || '-'}</td>
-                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-medium min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">{formatText(rate.withdrawal) || '-'}</td>
+                    <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-bold min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">{formatText(rate.withdrawal) || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[150px] whitespace-normal leading-relaxed">{rate.withdrawalLimit || '-'}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.settlementTerms || '-'} <br/><span className="text-[10px] text-gray-400">{rate.settlementCycle || '-'}</span></td>
                   </tr>

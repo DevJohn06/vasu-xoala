@@ -105,7 +105,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse text-left">
+                  <table className="w-full border-collapse text-left font-semibold">
                     <thead>
                       <tr className="bg-[#f3f4f6] dark:bg-zinc-900 border-b border-gray-300 dark:border-zinc-800">
                         <th className="px-4 py-2 text-[10px] font-bold uppercase text-gray-700 dark:text-zinc-300 border-r border-gray-300 dark:border-zinc-800 w-[15%] text-center">Channel Code</th>
@@ -134,7 +134,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
 
                             {/* PAY IN */}
                             <td className="px-4 py-5 align-top border-r border-gray-200 dark:border-zinc-800">
-                              <div className="text-[12px] font-medium text-gray-800 dark:text-zinc-200">
+                              <div className="text-[12px] font-bold text-gray-800 dark:text-zinc-200">
                                 {formatText(rate.payIn)}
                               </div>
                             </td>
@@ -175,7 +175,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
 
                             {/* LOCATIONS */}
                             <td className="px-4 py-5 align-top">
-                              <div className="text-[11px] text-gray-700 dark:text-zinc-400 leading-relaxed font-medium">
+                              <div className="text-[11px] text-gray-700 dark:text-zinc-400 leading-relaxed font-bold">
                                 {formatText(rate.geoOpenForProcessing)}
                               </div>
                             </td>

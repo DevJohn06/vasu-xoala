@@ -300,7 +300,7 @@ export default function UploadOffshoreRatesModal({ targetSlug }: { targetSlug: s
                   </div>
                   <div className="rounded-lg border border-gray-200 dark:border-zinc-700 overflow-hidden">
                     <div className="overflow-x-auto max-h-48">
-                      <table className="w-full text-[11px]">
+                      <table className="w-full text-[11px] font-semibold">
                         <thead className="bg-gray-50 dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider">
                           <tr>
                             {previewHeaders.map((h) => (

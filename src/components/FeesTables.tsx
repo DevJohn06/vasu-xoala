@@ -57,16 +57,16 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
             FEES AND TERMS APPLICABLE TO PREMIUM LATAM CHANNEL CODE: TPS
           </h3>
         </div>
-        <table className="w-full text-left border-collapse text-sm">
+        <table className="w-full text-left border-collapse text-sm font-semibold">
           <thead className="bg-gray-100 dark:bg-zinc-900/50">
             <tr>
-              <th className="px-4 py-3 font-semibold text-gray-900 dark:text-zinc-100 border-b border-r border-gray-200 dark:border-zinc-800 w-1/3">SETTLEMENT TERMS</th>
-              <th className="px-4 py-3 font-semibold text-gray-900 dark:text-zinc-100 border-b border-gray-200 dark:border-zinc-800">FEES</th>
+              <th className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-b border-r border-gray-200 dark:border-zinc-800 w-1/3">SETTLEMENT TERMS</th>
+              <th className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-b border-gray-200 dark:border-zinc-800">FEES</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-zinc-800">
             <tr>
-              <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
+              <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
                 Minimum transaction fee/ refund fee
               </td>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 align-top">
@@ -74,7 +74,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
               </td>
             </tr>
             <tr>
-              <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
+              <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
                 Additional Legal Terms
               </td>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 align-top whitespace-pre-line">
@@ -92,10 +92,10 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
             FEES AND TERMS APPLICABLE TO P2P CHANNEL OPERATING CONDITIONS CHANNEL CODE: TYP
           </h3>
         </div>
-        <table className="w-full text-left border-collapse text-sm">
+        <table className="w-full text-left border-collapse text-sm font-semibold">
           <tbody className="divide-y divide-gray-200 dark:divide-zinc-800">
             <tr>
-              <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 w-1/3 align-top">
+              <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 w-1/3 align-top">
                 Clients&apos; currencies<br />
                 <span className="text-xs text-gray-500">(Deposit/Withdrawal | PAY-IN/PAY-OUT)</span>
               </td>
@@ -104,7 +104,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
               </td>
             </tr>
             <tr>
-              <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
+              <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
                 MCC-code
               </td>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 align-middle">
@@ -112,7 +112,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
               </td>
             </tr>
             <tr>
-              <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
+              <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
                 Traffic
               </td>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 align-middle">
@@ -120,7 +120,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
               </td>
             </tr>
             <tr>
-              <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
+              <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100 border-r border-gray-200 dark:border-zinc-800 align-top">
                 Processing fees
               </td>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 align-middle">
@@ -134,7 +134,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
           <h4 className="text-[12px] font-bold text-white uppercase tracking-wider">FX CALCULATION</h4>
         </div>
         
-        <table className="w-full text-left border-collapse text-sm">
+        <table className="w-full text-left border-collapse text-sm font-semibold">
           <tbody className="divide-y divide-gray-200 dark:divide-zinc-800">
             <tr>
               <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 border-r border-gray-200 dark:border-zinc-800 w-1/3 align-top whitespace-pre-line text-xs" rowSpan={Math.max(1, (typ.fxRates?.length || DEFAULT_TYP.fxRates.length) + 1)}>
@@ -149,7 +149,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
             </tr>
             {(typ.fxRates || DEFAULT_TYP.fxRates).map((rate, i) => (
               <tr key={i}>
-                <td className="px-4 py-3 font-medium text-gray-900 dark:text-zinc-100">
+                <td className="px-4 py-3 font-bold text-gray-900 dark:text-zinc-100">
                   {rate.currencies}
                 </td>
                 <td className="px-4 py-3 text-gray-700 dark:text-zinc-300 border-l border-gray-200 dark:border-zinc-800">

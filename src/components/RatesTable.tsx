@@ -117,8 +117,8 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
         </div>
 
         <div className="w-full overflow-x-auto rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm">
-          <table className="w-full text-[11px] text-left border-collapse">
-            <thead className="bg-gray-50/80 dark:bg-zinc-900/80 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-semibold tracking-wider border-b border-gray-200 dark:border-zinc-800 sticky top-0 z-10 backdrop-blur-md">
+          <table className="w-full text-[11px] text-left border-collapse font-semibold">
+            <thead className="bg-gray-50/80 dark:bg-zinc-900/80 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-bold tracking-wider border-b border-gray-200 dark:border-zinc-800 sticky top-0 z-10 backdrop-blur-md">
               <tr>
                 <th className="px-2 py-3 whitespace-nowrap">Currency</th>
                 <th className="px-2 py-3 text-center">Channel</th>
@@ -158,7 +158,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                         <span title={rate.country} aria-label={rate.country} className="inline-flex items-center justify-center w-6 h-6 text-2xl cursor-help drop-shadow-sm leading-none">
                           {getCountryFlag(rate.country || "")}
                         </span>
-                        <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                        <span className="text-emerald-600 dark:text-emerald-400 font-bold">
                           {rate.currency}
                         </span>
                       </div>
@@ -172,13 +172,13 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 leading-relaxed align-top min-w-[100px]">
                       {rate.verticals || <span className="text-gray-300 dark:text-zinc-600">-</span>}
                     </td>
-                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-medium whitespace-normal align-top min-w-[150px] max-w-[220px]">
+                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-bold whitespace-normal align-top min-w-[150px] max-w-[220px]">
                       {formatText(rate.deposit)}
                     </td>
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 align-top whitespace-nowrap">
                       {rate.depositLimit}
                     </td>
-                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-medium whitespace-normal align-top min-w-[150px] max-w-[220px]">
+                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 font-bold whitespace-normal align-top min-w-[150px] max-w-[220px]">
                       {formatText(rate.withdrawal)}
                     </td>
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 align-top whitespace-nowrap">
@@ -190,7 +190,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                     <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 leading-relaxed align-top min-w-[100px]">
                       {formatText(rate.settlementTerms)}
                     </td>
-                    <td className="px-2 py-3 text-indigo-600 dark:text-indigo-400 font-medium whitespace-nowrap align-top">
+                    <td className="px-2 py-3 text-indigo-600 dark:text-indigo-400 font-bold whitespace-nowrap align-top">
                       {formatText(rate.settlementCycle)}
                     </td>
                   </tr>

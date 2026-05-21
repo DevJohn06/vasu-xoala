@@ -141,7 +141,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
         </div>
         <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm whitespace-nowrap">
+            <table className="w-full text-left text-sm whitespace-nowrap font-semibold">
               <thead className="bg-gray-50/50 dark:bg-zinc-800/50 border-b border-gray-100 dark:border-zinc-800">
                 <tr>
                   <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300 w-16">PIN</th>
@@ -196,7 +196,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                   return (
                     <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
                       <td className="px-6 py-4"><CopyPin pin={user.pin} /></td>
-                      <td className="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{user.firstName} {user.lastName}</td>
+                      <td className="px-6 py-4 font-bold text-gray-900 dark:text-gray-100">{user.firstName} {user.lastName}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${user.status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400'}`}>
                           {user.status}
@@ -242,7 +242,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
       <div className="space-y-4">
         <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50 pl-1">Administrators</h3>
         <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
-          <table className="w-full text-left text-sm whitespace-nowrap">
+          <table className="w-full text-left text-sm whitespace-nowrap font-semibold">
             <thead className="bg-gray-50/50 dark:bg-zinc-800/50 border-b border-gray-100 dark:border-zinc-800">
               <tr>
                 <th className="px-6 py-4 font-semibold text-gray-600 dark:text-gray-300">ID</th>
@@ -282,7 +282,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
                 return (
                   <tr key={admin.id} className="hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
                     <td className="px-6 py-4 text-gray-400 font-mono text-xs">{admin.id}</td>
-                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-gray-100">{admin.username}</td>
+                    <td className="px-6 py-4 font-bold text-gray-900 dark:text-gray-100">{admin.username}</td>
                     <td className="px-6 py-4"><span className="inline-flex items-center px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 text-xs font-medium">ADMIN</span></td>
                     <td className="px-6 py-4 text-gray-400 italic text-xs">Hidden</td>
                     <td className="px-6 py-4 text-right">
