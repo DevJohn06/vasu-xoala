@@ -125,9 +125,9 @@ export default function RatesPanelTable({
                   </span>
                   <span className="font-semibold text-emerald-600 dark:text-emerald-400">{rate.currency}</span>
                 </td>
-                <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[10px]">{rate.channelCode || "-"}</td>
-                <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{rate.paymentMethod}</td>
-                <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[120px] truncate" title={rate.verticals || ""}>
+                <td className="px-4 py-3 font-mono text-gray-500 dark:text-gray-400 text-[10px] align-top">{rate.channelCode || "-"}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[200px] min-w-[120px] whitespace-normal break-words align-top leading-relaxed">{rate.paymentMethod}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-400 max-w-[120px] truncate align-top" title={rate.verticals || ""}>
                   {rate.verticals || "-"}
                 </td>
                 <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-bold min-w-[150px] max-w-[220px] whitespace-normal align-top leading-relaxed">

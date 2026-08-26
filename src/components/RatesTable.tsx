@@ -175,7 +175,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                     <td className="px-2 py-3 font-mono text-[10px] text-gray-600 dark:text-zinc-400 align-top max-w-[90px] truncate" title={rate.channelCode}>
                       {rate.channelCode}
                     </td>
-                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 align-top min-w-[100px]">
+                    <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 align-top max-w-[200px] min-w-[120px] whitespace-normal break-words leading-relaxed">
                       {rate.paymentMethod}
                     </td>
                     <td className="px-2 py-3 text-gray-600 dark:text-zinc-400 leading-relaxed align-top min-w-[100px]">
