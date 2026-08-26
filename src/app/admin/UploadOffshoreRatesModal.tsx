@@ -57,7 +57,7 @@ export default function UploadOffshoreRatesModal({ targetSlug }: { targetSlug: s
   const [uploadTarget, setUploadTarget] = useState(targetSlug)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const isGeneralRates = targetSlug === 'general-rates' || targetSlug === 'general-rates-direct';
+  const isGeneralRates = targetSlug === 'general-rates-reseller' || targetSlug === 'general-rates-direct' || targetSlug === 'general-rates';
 
   const reset = () => {
     setSelectedFile(null)
@@ -205,8 +205,8 @@ export default function UploadOffshoreRatesModal({ targetSlug }: { targetSlug: s
                     onChange={(e) => setUploadTarget(e.target.value)}
                     className="px-3 py-2 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-700 rounded-lg text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-500"
                   >
-                    <option value="general-rates">Reseller Rates</option>
                     <option value="general-rates-direct">Direct Rates</option>
+                    <option value="general-rates-reseller">Reseller Rates</option>
                   </select>
                 </div>
               )}

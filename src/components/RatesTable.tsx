@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { COUNTRIES } from "@/data/countries";
+import { Pagination } from "@/components/ui/Pagination";
 
 export type RateRowType = {
   _key?: string;
@@ -39,6 +40,8 @@ const getCountryFlag = (countryName: string) => {
 export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 35;
 
   const formatText = (text?: string | null) => {
     if (!text) return null;
@@ -99,13 +102,19 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
               placeholder="Search rates…"
               className="pl-8 pr-8 py-2 text-sm rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 placeholder-gray-400 dark:placeholder-zinc-500 outline-none focus:ring-2 focus:ring-emerald-500/40 transition-shadow w-52"
             />
             {searchQuery && (
               <button
-                onClick={() => setSearchQuery("")}
+                onClick={() => {
+                  setSearchQuery("");
+                  setCurrentPage(1);
+                }}
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-500 dark:text-zinc-600 dark:hover:text-zinc-400 transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -141,7 +150,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                   </td>
                 </tr>
               ) : null}
-              {filteredRates.map((rate, index) => {
+              {filteredRates.slice((currentPage - 1) * pageSize, currentPage * pageSize).map((rate, index) => {
                 const rowKey = String(rate._key || rate.id || `fallback-row-${index}`);
                 return (
                   <tr
@@ -199,6 +208,14 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredRates.length}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </section>
   );

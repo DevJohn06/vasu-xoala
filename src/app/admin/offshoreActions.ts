@@ -17,7 +17,7 @@ export async function createOffshoreRate(formData: FormData) {
   const session = await auth()
   if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
-  const pageSlug = (formData.get("pageSlug") as string) || "general-rates"
+  const pageSlug = (formData.get("pageSlug") as string) || "general-rates-direct"
   const category = formData.get("category") as string
   const channelCode = formData.get("channelCode") as string
 
@@ -176,9 +176,9 @@ export async function copyGeneralOffshoreRatesToUser(formData: FormData) {
   // Delete existing offshore rates for user
   await db.delete(offshoreRates).where(eq(offshoreRates.pageSlug, user.pageSlug))
 
-  const source = formData.get("source") as string || "general-rates"
-  let offshoreSource = "reseller";
-  if (source === "general-rates-direct") offshoreSource = "direct";
+  const source = formData.get("source") as string || "general-rates-direct"
+  let offshoreSource = "direct";
+  if (source === "general-rates-reseller" || source === "general-rates" || source === "reseller") offshoreSource = "reseller";
 
   // Fetch general offshore rates
   const generalRates = await db.select().from(offshoreRates).where(eq(offshoreRates.pageSlug, offshoreSource))

@@ -1,4 +1,4 @@
-import { auth } from "@/auth"
+import { auth, signOut } from "@/auth"
 import { loginWithPin } from "../actions"
 import { db } from "@/db"
 import { rates, users, pageSettings, offshoreRates } from "@/db/schema"
@@ -133,11 +133,32 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
 
       {/* Header / Nav */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+        <div className="w-full max-w-[1600px] mx-auto flex h-16 items-center justify-between px-4 md:px-8 xl:px-12">
           <div className="flex items-center">
             <Image src="/vasu-logo.png" alt="Vasu" width={120} height={36} priority />
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            {session && !isAdmin && (
+              <form
+                action={async () => {
+                  "use server"
+                  await signOut({ redirectTo: `/rate/${params.slug}` })
+                }}
+              >
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-1.5 text-xs md:text-sm font-medium px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400 border border-gray-200/60 dark:border-zinc-700/60 transition-colors cursor-pointer"
+                  title="Lock rate sheet"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                  </svg>
+                  <span>Logout</span>
+                </button>
+              </form>
+            )}
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -227,7 +248,7 @@ export default async function RatePage(props: { params: Promise<{ slug: string }
 
       {/* Minimal Footer */}
       <footer className="relative z-10 border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 flex flex-col items-center text-center">
+        <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-12 flex flex-col items-center text-center">
           <div className="mb-6 opacity-40 grayscale">
             <Image src="/vasu-logo.png" alt="Vasu" width={80} height={24} />
           </div>

@@ -11,7 +11,7 @@ export default function OffshoreRatesForm({ defaultSlug, fixedCategory }: { defa
 
   return (
     <form action={createOffshoreRate} className="space-y-6">
-      <input type="hidden" name="pageSlug" value={defaultSlug || "general-rates"} />
+      <input type="hidden" name="pageSlug" value={defaultSlug || "direct"} />
       
       {/* Basic Settings */}
       <div className="p-4 bg-gray-50 dark:bg-zinc-800/50 rounded-xl border border-gray-100 dark:border-zinc-700/50 space-y-4">

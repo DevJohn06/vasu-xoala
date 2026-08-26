@@ -15,7 +15,7 @@ export default async function Home() {
   let dbRates: RateRowType[] = [];
 
   try {
-    dbRates = await db.select().from(rates).where(eq(rates.pageSlug, "general-rates"));
+    dbRates = await db.select().from(rates).where(eq(rates.pageSlug, "general-rates-direct"));
   } catch (err) {
     console.error("Failed to fetch rates from Turso:", err);
   }
@@ -58,7 +58,7 @@ export default async function Home() {
 
       {/* Header / Nav */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-zinc-800/50 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+        <div className="w-full max-w-[1600px] mx-auto flex h-16 items-center justify-between px-4 md:px-8 xl:px-12">
           <div className="flex items-center">
             <Image src="/vasu-logo.png" alt="Vasu" width={120} height={36} priority />
           </div>
@@ -115,7 +115,7 @@ export default async function Home() {
 
       {/* Minimal Footer */}
       <footer className="relative z-10 border-t border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 flex flex-col items-center text-center">
+        <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-12 flex flex-col items-center text-center">
           <div className="mb-6 opacity-40 grayscale">
             <Image src="/vasu-logo.png" alt="Vasu" width={80} height={24} />
           </div>

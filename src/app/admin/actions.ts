@@ -196,7 +196,7 @@ export async function createRate(formData: FormData) {
   const session = await auth()
   if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
-  const pageSlug = (formData.get("pageSlug") as string) || "general-rates"
+  const pageSlug = (formData.get("pageSlug") as string) || "general-rates-direct"
   const country = formData.get("country") as string
   const currency = formData.get("currency") as string
   const channelCode = formData.get("channelCode") as string
@@ -249,7 +249,7 @@ export async function copyGeneralRatesToUser(formData: FormData) {
   await db.delete(rates).where(eq(rates.pageSlug, user.pageSlug))
   await db.delete(pageSettings).where(eq(pageSettings.pageSlug, user.pageSlug))
 
-  const source = formData.get("source") as string || "general-rates"
+  const source = formData.get("source") as string || "general-rates-direct"
 
   // Fetch general rates
   const generalRates = await db.select().from(rates).where(eq(rates.pageSlug, source))
@@ -326,14 +326,14 @@ export async function cloneDirectToReseller() {
   if (!session || session.user.type !== 'ADMIN') throw new Error("Unauthorized")
 
   // Delete existing reseller rates
-  await db.delete(rates).where(eq(rates.pageSlug, "general-rates"))
-  await db.delete(pageSettings).where(eq(pageSettings.pageSlug, "general-rates"))
+  await db.delete(rates).where(eq(rates.pageSlug, "general-rates-reseller"))
+  await db.delete(pageSettings).where(eq(pageSettings.pageSlug, "general-rates-reseller"))
 
   // Fetch direct rates
   const directRates = await db.select().from(rates).where(eq(rates.pageSlug, "general-rates-direct"))
   if (directRates.length > 0) {
     const newRates = directRates.map(r => ({
-      pageSlug: "general-rates",
+      pageSlug: "general-rates-reseller",
       country: r.country,
       currency: r.currency,
       channelCode: r.channelCode,
@@ -355,7 +355,7 @@ export async function cloneDirectToReseller() {
   if (directSettings.length > 0) {
     const s = directSettings[0]
     await db.insert(pageSettings).values({
-      pageSlug: "general-rates",
+      pageSlug: "general-rates-reseller",
       tpsFees: s.tpsFees,
       typFees: s.typFees,
     })

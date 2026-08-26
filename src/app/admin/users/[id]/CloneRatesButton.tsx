@@ -6,7 +6,7 @@ import { copyGeneralOffshoreRatesToUser } from "../../offshoreActions";
 
 export default function CloneRatesButton({ userId }: { userId: number }) {
   const [isPending, setIsPending] = useState(false);
-  const [source, setSource] = useState("general-rates");
+  const [source, setSource] = useState("general-rates-direct");
 
   const handleClone = async () => {
     if (window.confirm("WARNING: Are you sure you want to clone these general rates to this user? This will DELETE and REPLACE all of this user's existing rates!")) {
@@ -33,8 +33,8 @@ export default function CloneRatesButton({ userId }: { userId: number }) {
         disabled={isPending}
         className="px-3 py-2.5 border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 rounded-lg text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-500"
       >
-        <option value="general-rates">Reseller Rates</option>
         <option value="general-rates-direct">Direct Rates</option>
+        <option value="general-rates-reseller">Reseller Rates</option>
       </select>
       <button 
         onClick={handleClone} 

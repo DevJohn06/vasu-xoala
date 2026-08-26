@@ -10,6 +10,7 @@ import UploadOffshoreRatesModal from "./UploadOffshoreRatesModal"
 import CloneOffshoreDirectButton from "./CloneOffshoreDirectButton"
 import CloneOffshoreCategoryToUserButton from "./CloneOffshoreCategoryToUserButton"
 import PurgeOffshoreRatesButton from "./PurgeOffshoreRatesButton"
+import { Pagination } from "@/components/ui/Pagination"
 
 export default function OffshoreRatesPanel({ 
   targetSlug, 
@@ -24,6 +25,8 @@ export default function OffshoreRatesPanel({
   const searchParams = useSearchParams();
   const rateTab = searchParams.get('rateTab') || 'direct';
   const [searchQueries, setSearchQueries] = useState<Record<string, string>>({});
+  const [categoryPages, setCategoryPages] = useState<Record<string, number>>({});
+  const pageSize = 35;
 
   const allRates = initialRates;
   const activeSlug = targetSlug || (rateTab === 'reseller' ? 'reseller' : 'direct');
@@ -78,6 +81,9 @@ export default function OffshoreRatesPanel({
           ? catRates.filter(r => r.channelCode.toLowerCase().includes(query.toLowerCase()))
           : catRates;
         
+        const catPage = categoryPages[cat] || 1;
+        const paginatedCatRates = filteredCatRates.slice((catPage - 1) * pageSize, catPage * pageSize);
+        
         return (
           <div key={cat} className="space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-100 dark:border-zinc-800 pb-4">
@@ -96,7 +102,11 @@ export default function OffshoreRatesPanel({
                   <input
                     type="text"
                     value={query}
-                    onChange={(e) => setSearchQueries(prev => ({ ...prev, [cat]: e.target.value }))}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setSearchQueries(prev => ({ ...prev, [cat]: val }));
+                      setCategoryPages(prev => ({ ...prev, [cat]: 1 }));
+                    }}
                     placeholder={`Search ${cat.split(':').pop()?.trim()}...`}
                     className="pl-8 pr-3 py-1.5 text-[11px] rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 outline-none focus:ring-1 focus:ring-emerald-500 w-48"
                   />
@@ -144,7 +154,7 @@ export default function OffshoreRatesPanel({
                         </td>
                       </tr>
                     ) : (
-                      filteredCatRates.map((rate) => (
+                      paginatedCatRates.map((rate) => (
                         <tr key={rate.id} className="hover:bg-gray-50/50 dark:hover:bg-zinc-900/50 transition-colors">
                           {/* ACTIONS */}
                           <td className="px-4 py-4 align-top border-r border-gray-200 dark:border-zinc-800 sticky left-0 z-10 bg-white dark:bg-zinc-950">
@@ -154,7 +164,7 @@ export default function OffshoreRatesPanel({
                               </Link>
                               <form action={deleteOffshoreRate}>
                                 <input type="hidden" name="id" value={rate.id} />
-                                <button type="submit" className="w-full p-1.5 text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-500/10 transition-colors rounded flex items-center justify-center" title="Delete">
+                                <button type="submit" className="w-full p-1.5 text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-500/10 transition-colors rounded flex items-center justify-center cursor-pointer" title="Delete">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                                 </button>
                               </form>
@@ -221,6 +231,17 @@ export default function OffshoreRatesPanel({
                   </tbody>
                 </table>
               </div>
+
+              {/* Pagination */}
+              <div className="px-4 border-t border-gray-200 dark:border-zinc-800">
+                <Pagination
+                  currentPage={catPage}
+                  totalItems={filteredCatRates.length}
+                  pageSize={pageSize}
+                  onPageChange={(p) => setCategoryPages(prev => ({ ...prev, [cat]: p }))}
+                />
+              </div>
+
               {!targetSlug && catRates.length > 0 && (
                 <div className="p-3 border-t border-gray-200 dark:border-zinc-800 flex justify-end bg-gray-50/50 dark:bg-zinc-800/30">
                   <PurgeOffshoreRatesButton targetSlug={activeSlug} category={cat} />

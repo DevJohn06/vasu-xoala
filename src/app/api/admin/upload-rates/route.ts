@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   }
 
   const file = formData.get("file") as File | null
-  const pageSlug = (formData.get("pageSlug") as string) || "general-rates"
+  const pageSlug = (formData.get("pageSlug") as string) || "general-rates-direct"
 
   if (!file) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 })

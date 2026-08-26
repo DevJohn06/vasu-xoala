@@ -22,7 +22,7 @@ export default function RatesForm({ defaultSlug }: { defaultSlug?: string } = {}
 
   return (
     <form action={createRate} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-      <input type="hidden" name="pageSlug" value={defaultSlug || "general-rates"} />
+      <input type="hidden" name="pageSlug" value={defaultSlug || "general-rates-direct"} />
       <div className="space-y-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Country</label>
         <select name="country" required value={selectedCountry} onChange={handleCountryChange} className="w-full px-3 py-2 text-sm border rounded bg-transparent border-gray-200 dark:border-zinc-700 outline-none">

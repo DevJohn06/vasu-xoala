@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Pagination } from "@/components/ui/Pagination";
 
 export type OffshoreRateRowType = {
   id?: string | number;
@@ -31,6 +32,8 @@ export type OffshoreRateRowType = {
 
 export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[] }) {
   const [searchQueries, setSearchQueries] = useState<Record<string, string>>({});
+  const [categoryPages, setCategoryPages] = useState<Record<string, number>>({});
+  const pageSize = 35;
 
   const formatText = (text?: string | null) => {
     if (!text) return null;
@@ -83,6 +86,9 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
 
           const sectionNote = categoryRates.find(r => r.categoryNote)?.categoryNote;
 
+          const catPage = categoryPages[category] || 1;
+          const paginatedCatRates = filteredCatRates.slice((catPage - 1) * pageSize, catPage * pageSize);
+
           return (
             <div key={category} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
               {/* Table Container with Blue Header */}
@@ -97,7 +103,11 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
                     <input
                       type="text"
                       value={query}
-                      onChange={(e) => setSearchQueries(prev => ({ ...prev, [category]: e.target.value }))}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setSearchQueries(prev => ({ ...prev, [category]: val }));
+                        setCategoryPages(prev => ({ ...prev, [category]: 1 }));
+                      }}
                       placeholder="Search..."
                       className="pl-3 pr-3 py-0.5 text-[10px] rounded border border-gray-400/50 bg-white/50 dark:bg-zinc-900/50 text-gray-900 dark:text-white placeholder-gray-500 outline-none w-32 focus:ring-1 focus:ring-blue-400 transition-all"
                     />
@@ -123,7 +133,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
                           </td>
                         </tr>
                       ) : (
-                        filteredCatRates.map((rate, idx) => (
+                        paginatedCatRates.map((rate, idx) => (
                           <tr key={rate.id || idx} className="hover:bg-gray-50/50 dark:hover:bg-zinc-900/50 transition-colors">
                             {/* CHANNEL CODE */}
                             <td className="px-4 py-5 align-top border-r border-gray-200 dark:border-zinc-800">
@@ -184,6 +194,16 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
                       )}
                     </tbody>
                   </table>
+                </div>
+
+                {/* Pagination */}
+                <div className="px-4 border-t border-gray-200 dark:border-zinc-800">
+                  <Pagination
+                    currentPage={catPage}
+                    totalItems={filteredCatRates.length}
+                    pageSize={pageSize}
+                    onPageChange={(p) => setCategoryPages(prev => ({ ...prev, [category]: p }))}
+                  />
                 </div>
               </div>
 
