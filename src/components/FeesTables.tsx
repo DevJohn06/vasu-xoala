@@ -130,8 +130,8 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
           </tbody>
         </table>
         
-        <div className="bg-zinc-600 dark:bg-zinc-700 px-4 py-3 border-t border-b border-gray-200 dark:border-zinc-600 text-center">
-          <h4 className="text-[12px] font-bold text-white uppercase tracking-wider">FX CALCULATION</h4>
+        <div className="bg-zinc-700 dark:bg-zinc-800 px-4 py-3 border-t border-b border-gray-200 dark:border-zinc-700">
+          <h3 className="text-[12px] font-bold text-white uppercase tracking-wider">FX CALCULATION</h3>
         </div>
         
         <table className="w-full text-left border-collapse text-sm font-semibold">
