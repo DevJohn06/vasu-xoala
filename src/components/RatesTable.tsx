@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { COUNTRIES } from "@/data/countries";
 import { Pagination } from "@/components/ui/Pagination";
+import { ChannelDetailModal } from "@/components/ChannelDetailModal";
 
 export type RateRowType = {
   _key?: string;
@@ -39,6 +40,7 @@ const getCountryFlag = (countryName: string) => {
 
 export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
   const [hoveredRow, setHoveredRow] = useState<string | null>(null);
+  const [selectedChannel, setSelectedChannel] = useState<RateRowType | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 35;
@@ -172,8 +174,15 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
                         </span>
                       </div>
                     </td>
-                    <td className="px-2 py-3 font-mono text-[10px] text-gray-600 dark:text-zinc-400 align-top max-w-[90px] truncate" title={rate.channelCode}>
-                      {rate.channelCode}
+                    <td className="px-2 py-3 font-mono text-[10px] align-top max-w-[100px]">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedChannel(rate)}
+                        className="text-gray-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-bold hover:underline truncate max-w-full text-left cursor-pointer transition-colors"
+                        title={`Click to view channel details for ${rate.channelCode}`}
+                      >
+                        {rate.channelCode}
+                      </button>
                     </td>
                     <td className="px-2 py-3 text-gray-700 dark:text-zinc-300 align-top max-w-[200px] min-w-[120px] whitespace-normal break-words leading-relaxed">
                       {rate.paymentMethod}
@@ -215,6 +224,12 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
           totalItems={filteredRates.length}
           pageSize={pageSize}
           onPageChange={setCurrentPage}
+        />
+
+        {/* Read-Only Channel Detail Modal */}
+        <ChannelDetailModal
+          rate={selectedChannel}
+          onClose={() => setSelectedChannel(null)}
         />
       </div>
     </section>
