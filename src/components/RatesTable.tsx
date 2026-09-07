@@ -77,7 +77,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
   }
 
   return (
-    <section className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 pt-2 pb-16">
+    <section className="w-full pt-2 pb-16">
       <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
         {/* Search bar above table */}

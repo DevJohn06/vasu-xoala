@@ -96,15 +96,13 @@ export default async function UserProfilePage(props: Props) {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm relative overflow-hidden">
-         <PricingTabsWrapper
-           offshoreContent={<OffshoreRatesPanel initialRates={userOffshoreRates} targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} />}
-           cryptoContent={<CryptoRatesTable isEditable={true} pageSlug={user.pageSlug || ""} cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} />}
-           otcContent={<OtcRatesTable isEditable={true} pageSlug={user.pageSlug || ""} otcFees={otcFeesData} />}
-         >
-           <RatesPanel targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} />
-         </PricingTabsWrapper>
-      </div>
+      <PricingTabsWrapper
+        offshoreContent={<OffshoreRatesPanel initialRates={userOffshoreRates} targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} />}
+        cryptoContent={<CryptoRatesTable isEditable={true} pageSlug={user.pageSlug || ""} cryptoFees={cryptoFeesData} supportedCryptos={supportedCryptosData} />}
+        otcContent={<OtcRatesTable isEditable={true} pageSlug={user.pageSlug || ""} otcFees={otcFeesData} />}
+      >
+        <RatesPanel targetSlug={user.pageSlug || ""} editRateId={searchParams?.editRateId} rateQ={searchParams?.rateQ} />
+      </PricingTabsWrapper>
     </div>
   );
 }

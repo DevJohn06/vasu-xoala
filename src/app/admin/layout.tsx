@@ -28,7 +28,7 @@ export default async function AdminLayout({
       </div>
 
       <nav className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-gray-200 dark:border-zinc-800 shadow-sm sticky top-0 z-40">
-        <div className="max-w-10xl mx-auto px-8 py-4 flex justify-between items-center w-full relative">
+        <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-4 flex justify-between items-center relative">
           {/* Logo centered */}
           <div className="font-semibold text-lg tracking-tight absolute left-1/2 transform -translate-x-1/2">
             <Image src="/vasu-logo.png" alt="Vasu" width={100} height={30} />
@@ -47,7 +47,7 @@ export default async function AdminLayout({
           </div>
         </div>
       </nav>
-      <main className="max-w-7xl mx-auto p-8">
+      <main className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-8">
         {children}
       </main>
     </div>

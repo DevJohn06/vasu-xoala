@@ -128,7 +128,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
       </div>
 
       <div className="space-y-4">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between pl-1">
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50">Retail Users Directory</h3>
           <SearchFilter />
         </div>
@@ -139,7 +139,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50 pl-1">Administrators</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50">Administrators</h3>
         <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
           <table className="w-full text-left text-sm whitespace-nowrap font-semibold">
             <thead className="bg-gray-50/50 dark:bg-zinc-800/50 border-b border-gray-100 dark:border-zinc-800">

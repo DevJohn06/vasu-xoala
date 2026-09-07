@@ -55,7 +55,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
 
   if (!rates || rates.length === 0) {
     return (
-      <section className="w-full max-w-[1400px] mx-auto px-4 py-12 text-center text-gray-500 dark:text-zinc-400">
+      <section className="w-full py-12 text-center text-gray-500 dark:text-zinc-400">
         No offshore rates available.
       </section>
     );
@@ -72,7 +72,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
   };
 
   return (
-    <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 py-8">
+    <section className="w-full pt-2 pb-16">
       <div className="space-y-16">
         {Object.entries(groupedRates).map(([category, categoryRates]) => {
           const query = searchQueries[category] || "";

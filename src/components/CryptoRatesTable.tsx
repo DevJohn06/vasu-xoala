@@ -189,7 +189,7 @@ export function CryptoRatesTable({
   };
 
   return (
-    <section className="w-full max-w-[1400px] mx-auto px-4 md:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <section className="w-full pt-2 pb-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Container */}
       <div className="flex flex-col xl:flex-row gap-6">
         

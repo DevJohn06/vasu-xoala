@@ -64,9 +64,9 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
   const initialFeesData = feesSettings.length > 0 ? feesSettings[0] : null;
 
   return (
-    <div className={`space-y-6 ${!targetSlug ? "pt-8 border-t border-gray-200 dark:border-zinc-800" : ""}`}>
+    <div className={`w-full space-y-6 ${!targetSlug ? "pt-8 border-t border-gray-200 dark:border-zinc-800" : ""}`}>
       {editingRate && <EditRateModal rate={editingRate} />}
-      <div className="flex justify-between items-center px-1 mb-6">
+      <div className="flex justify-between items-center mb-6">
         <div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-1">
             {!targetSlug ? (rateTab === 'reseller' ? "Reseller Rates Configuration" : "Direct Rates Configuration") : "Personalized Rate Profile"}
@@ -82,7 +82,7 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4 mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {!targetSlug && (
             <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-lg w-fit">
@@ -111,7 +111,7 @@ export default async function RatesPanel({ targetSlug, editRateId, rateQ, rateTa
       />
 
       <div className="mt-8 border-t border-gray-200 dark:border-zinc-800 pt-8">
-        <div className="flex justify-between items-start mb-6 px-1">
+        <div className="flex justify-between items-start mb-6">
           <div>
             <h4 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-2">
               {!targetSlug ? "Global Fee Configuration Tables" : "User Fee Configuration Tables"}

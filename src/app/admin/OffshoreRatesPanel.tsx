@@ -40,10 +40,10 @@ export default function OffshoreRatesPanel({
   ];
 
   return (
-    <div className="space-y-12 animate-in fade-in zoom-in-95 duration-500 w-full">
+    <div className="w-full space-y-12 animate-in fade-in zoom-in-95 duration-500">
       {editingRate && <EditOffshoreRateModal rate={editingRate} />}
       
-      <div className="flex justify-between items-center px-1 mb-2">
+      <div className="flex justify-between items-center mb-2">
         <div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-zinc-50 mb-1">
             {!targetSlug ? (rateTab === 'reseller' ? "Reseller Offshore Configuration" : "Direct Offshore Configuration") : "Personalized Offshore Profile"}
@@ -59,7 +59,7 @@ export default function OffshoreRatesPanel({
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between px-1 gap-4 mb-2">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           {!targetSlug && (
             <div className="flex bg-gray-100 dark:bg-zinc-800 p-1 rounded-lg w-fit">
