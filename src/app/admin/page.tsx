@@ -64,7 +64,7 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
   }
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
+    <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
 
       <div className="flex items-center justify-between pointer-events-none">
         <div>

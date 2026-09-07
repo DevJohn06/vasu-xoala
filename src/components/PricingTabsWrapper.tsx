@@ -26,7 +26,7 @@ export function PricingTabsWrapper({
     <div className="w-full flex flex-col items-center">
       
       {/* Tabs Navigation */}
-      <div className="w-full mt-6 mb-2">
+      <div className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 mt-6 mb-2">
         <div className="flex flex-wrap items-center gap-2 md:gap-4 border-b border-gray-200 dark:border-zinc-800 pb-2">
           {TABS.map((tab) => (
             <button

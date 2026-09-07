@@ -48,7 +48,7 @@ export function FeesTables({ data }: { data?: FeesData | null }) {
   };
 
   return (
-    <section className="w-full py-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <section className="w-full max-w-[1600px] mx-auto px-4 md:px-8 xl:px-12 py-8 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
       {/* TPS Table */}
       <div className="w-full overflow-hidden rounded-xl border border-gray-200 dark:border-zinc-800 shadow-sm bg-white dark:bg-zinc-950">
