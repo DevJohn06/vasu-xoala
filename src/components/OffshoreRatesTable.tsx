@@ -92,7 +92,7 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
           return (
             <div key={category} className="animate-in fade-in slide-in-from-bottom-4 duration-700">
               {/* Table Container with Blue Header */}
-              <div className="border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-white dark:bg-zinc-950">
+              <div className="border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-white dark:bg-zinc-950 scroll-mt-20" data-table-container>
 
                 {/* Blue Title Header */}
                 <div className="bg-[#A7C7E7] dark:bg-blue-900/40 border-b border-gray-300 dark:border-zinc-800 px-4 py-2.5 flex items-center justify-between">

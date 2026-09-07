@@ -115,7 +115,7 @@ export default function OffshoreRatesPanel({
               </div>
             </div>
 
-            <div className="border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-white dark:bg-zinc-950">
+            <div className="border border-gray-300 dark:border-zinc-800 rounded-sm overflow-hidden shadow-sm bg-white dark:bg-zinc-950 scroll-mt-20" data-table-container>
               {/* Blue Title Header for Category */}
               <div className="bg-[#A7C7E7] dark:bg-blue-900/40 border-b border-gray-300 dark:border-zinc-800 px-4 py-2 flex items-center justify-between">
                 <h4 className="text-[12px] font-bold text-gray-900 dark:text-blue-50 uppercase tracking-wide">

@@ -127,7 +127,7 @@ export function RatesTable({ rates = [] }: { rates: RateRowType[] }) {
           </div>
         </div>
 
-        <div className="w-full overflow-x-auto rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm">
+        <div className="w-full overflow-x-auto rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm scroll-mt-20" data-table-container>
           <table className="w-full text-[11px] text-left border-collapse font-semibold">
             <thead className="bg-gray-50/80 dark:bg-zinc-900/80 text-[10px] uppercase text-gray-500 dark:text-zinc-400 font-bold tracking-wider border-b border-gray-200 dark:border-zinc-800 sticky top-0 z-10 backdrop-blur-md">
               <tr>

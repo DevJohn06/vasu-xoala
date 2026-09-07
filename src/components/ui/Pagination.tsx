@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 
 export interface PaginationProps {
   currentPage: number;
@@ -8,6 +8,7 @@ export interface PaginationProps {
   pageSize?: number;
   onPageChange: (page: number) => void;
   className?: string;
+  targetRef?: React.RefObject<HTMLElement | null>;
 }
 
 export function Pagination({
@@ -16,13 +17,33 @@ export function Pagination({
   pageSize = 35,
   onPageChange,
   className = "",
+  targetRef,
 }: PaginationProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const totalPages = Math.ceil(totalItems / pageSize);
 
   if (totalPages <= 1) return null;
 
   const startItem = (currentPage - 1) * pageSize + 1;
   const endItem = Math.min(currentPage * pageSize, totalItems);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage === currentPage) return;
+    onPageChange(newPage);
+
+    setTimeout(() => {
+      const targetElement =
+        targetRef?.current ||
+        containerRef.current?.closest("[data-table-container]") ||
+        containerRef.current?.closest(".overflow-hidden") ||
+        containerRef.current?.closest(".overflow-x-auto") ||
+        containerRef.current?.parentElement;
+
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 0);
+  };
 
   // Generate page numbers with smart ellipses
   const getPageNumbers = () => {
@@ -45,7 +66,10 @@ export function Pagination({
   };
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-2 text-xs text-gray-500 dark:text-zinc-400 ${className}`}>
+    <div
+      ref={containerRef}
+      className={`flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-2 text-xs text-gray-500 dark:text-zinc-400 ${className}`}
+    >
       <div>
         Showing <span className="font-semibold text-gray-900 dark:text-zinc-100">{startItem}</span> to{" "}
         <span className="font-semibold text-gray-900 dark:text-zinc-100">{endItem}</span> of{" "}
@@ -56,7 +80,7 @@ export function Pagination({
         {/* Previous button */}
         <button
           type="button"
-          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
           className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800 disabled:opacity-40 disabled:pointer-events-none transition-colors font-medium cursor-pointer"
           aria-label="Previous page"
@@ -83,7 +107,7 @@ export function Pagination({
               <button
                 key={`page-${page}`}
                 type="button"
-                onClick={() => onPageChange(page)}
+                onClick={() => handlePageChange(page)}
                 aria-current={isCurrent ? "page" : undefined}
                 className={`min-w-[32px] h-8 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   isCurrent
@@ -100,7 +124,7 @@ export function Pagination({
         {/* Next button */}
         <button
           type="button"
-          onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+          onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
           className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-gray-700 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800 disabled:opacity-40 disabled:pointer-events-none transition-colors font-medium cursor-pointer"
           aria-label="Next page"

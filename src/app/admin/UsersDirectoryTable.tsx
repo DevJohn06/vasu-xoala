@@ -31,7 +31,7 @@ export default function UsersDirectoryTable({
   const paginatedUsers = users.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 shadow-sm overflow-hidden scroll-mt-20" data-table-container>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm whitespace-nowrap font-semibold">
           <thead className="bg-gray-50/50 dark:bg-zinc-800/50 border-b border-gray-100 dark:border-zinc-800">
