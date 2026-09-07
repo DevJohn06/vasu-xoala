@@ -84,8 +84,6 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
             )
             : categoryRates;
 
-          const sectionNote = categoryRates.find(r => r.categoryNote)?.categoryNote;
-
           const catPage = categoryPages[category] || 1;
           const paginatedCatRates = filteredCatRates.slice((catPage - 1) * pageSize, catPage * pageSize);
 
@@ -206,13 +204,6 @@ export function OffshoreRatesTable({ rates = [] }: { rates: OffshoreRateRowType[
                   />
                 </div>
               </div>
-
-              {/* Section Note */}
-              {sectionNote && (
-                <div className="mt-4 px-4 py-2 bg-blue-50/50 dark:bg-blue-900/10 border-l-4 border-blue-400 text-[11px] text-blue-700 dark:text-blue-300 font-medium">
-                  {sectionNote}
-                </div>
-              )}
             </div>
           );
         })}
