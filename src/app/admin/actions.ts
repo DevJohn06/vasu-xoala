@@ -5,7 +5,7 @@ import { users, admins, rates, pageSettings, type UserType } from "@/db/schema"
 import { revalidatePath } from "next/cache"
 import bcrypt from "bcryptjs"
 import { auth } from "@/auth"
-import { eq, count } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 import { redirect } from "next/navigation"
 
 // Helpers
@@ -20,14 +20,6 @@ async function generateUniquePin(): Promise<string> {
     if (existing.length === 0) {
       return pin;
     }
-  }
-}
-
-async function enforceAdminLimit() {
-  const adminCountQuery = await db.select({ value: count() }).from(admins);
-  const adminCount = adminCountQuery[0].value;
-  if (adminCount >= 3) {
-    throw new Error("Admin limit reached (max 3). Cannot provision another admin.");
   }
 }
 
@@ -136,8 +128,6 @@ export async function createAdmin(formData: FormData) {
   const password = formData.get("password") as string
 
   if (!username || !password) return
-
-  await enforceAdminLimit()
 
   const hashedPassword = await bcrypt.hash(password, 10)
 

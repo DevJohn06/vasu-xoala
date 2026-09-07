@@ -51,7 +51,6 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
 
   const allUsers = await db.select().from(users).orderBy(desc(users.id))
   const allAdmins = await db.select().from(admins).orderBy(desc(admins.id))
-  const isAdminLimitReached = allAdmins.length >= 3;
 
   const searchQuery = (searchParams?.q || '').toLowerCase();
   const statusFilter = searchParams?.statusFilter || 'all';
@@ -111,26 +110,19 @@ export default async function AdminPage(props: { searchParams: Promise<{ editUse
           </form>
         ) : (
           <div className="animate-in fade-in slide-in-from-left-4">
-            {isAdminLimitReached ? (
-              <div className="p-4 bg-orange-50 dark:bg-orange-500/10 border border-orange-100 dark:border-orange-500/20 rounded-lg flex items-center gap-3">
-                <span className="text-orange-600 dark:text-orange-400 font-medium">Administrator limit reached (3/3).</span>
-                <span className="text-orange-500/80 dark:text-orange-400/80 text-sm">Delete an existing admin to provision a new one.</span>
+            <form action={createAdmin} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
+                <input name="username" type="text" required className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow" />
               </div>
-            ) : (
-              <form action={createAdmin} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Username</label>
-                  <input name="username" type="text" required className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                  <input name="password" type="password" required className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow" />
-                </div>
-                <button type="submit" className="px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors whitespace-nowrap shadow-sm">
-                  Create Admin
-                </button>
-              </form>
-            )}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                <input name="password" type="password" required className="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-black dark:focus:ring-white bg-transparent border-gray-200 dark:border-zinc-700 outline-none transition-shadow" />
+              </div>
+              <button type="submit" className="px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors whitespace-nowrap shadow-sm">
+                Create Admin
+              </button>
+            </form>
           </div>
         )}
       </div>
